@@ -1,1 +1,1 @@
-export { useDraggable } from './hooks'
+export { useDraggable, useLocalStorage } from './hooks'
