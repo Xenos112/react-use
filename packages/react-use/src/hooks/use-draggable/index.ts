@@ -1,13 +1,7 @@
-import { useLayoutEffect, useRef, useState  } from 'react'
-import type { RefObject} from 'react';
+import { useLayoutEffect, useRef, useState } from 'react'
+import type { UseDraggableProps, ReturnType } from './types'
 
 // TODO: add a localStorage key to save the position in the session
-type ReturnType<T> = [RefObject<T | null>, { x: number; y: number }]
-type UseDraggableProps = {
-  x?: number
-  y?: number
-}
-
 /**
  * useDraggable
  * @param opts
