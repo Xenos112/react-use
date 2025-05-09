@@ -1,5 +1,5 @@
-import { RefObject, useLayoutEffect, useRef } from 'react'
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState  } from 'react'
+import type { RefObject} from 'react';
 
 // TODO: add a localStorage key to save the position in the session
 type ReturnType<T> = [RefObject<T | null>, { x: number; y: number }]
@@ -19,8 +19,8 @@ const useDraggable = <T extends HTMLElement>(
   opts?: UseDraggableProps,
 ): ReturnType<T> => {
   const ref = useRef<T>(null)
-  let x = opts?.x || 0
-  let y = opts?.y || 0
+  const x = opts?.x || 0
+  const y = opts?.y || 0
   let startX: number | null = 0
   let startY: number | null = 0
   const [xPosition, setXPosition] = useState(x)

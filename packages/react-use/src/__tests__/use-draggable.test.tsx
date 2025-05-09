@@ -1,7 +1,7 @@
 import React from 'react'
-import { render, screen, fireEvent, cleanup } from '@testing-library/react'
-import { useDraggable } from '../hooks'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
+import { useDraggable } from '../../dist'
 
 const DraggableComponent = ({ x = 0, y = 0 }: { x?: number; y?: number }) => {
   const [ref, position] = useDraggable<HTMLDivElement>({ x, y })
