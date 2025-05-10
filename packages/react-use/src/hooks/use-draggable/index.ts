@@ -23,12 +23,19 @@ const useDraggable = <T extends HTMLElement>({
   const [xPosition, setXPosition] = useState(x)
   const [yPosition, setYPostion] = useState(y)
   const [isDragging, setIsDragging] = useState(false)
+  const [lastPosition, setLastPosition] = useState<Postion>({
+    x: xPosition,
+    y: yPosition,
+  })
 
   useLayoutEffect(() => {
     if (ref.current) {
+      const currentX = (lastPosition.x ? lastPosition.x : x) + 'px'
+      const currentY = (lastPosition.y ? lastPosition.y : y) + 'px'
+
       ref.current.style.position = 'fixed'
-      ref.current.style.left = x + 'px'
-      ref.current.style.top = y + 'px'
+      ref.current.style.left = currentX
+      ref.current.style.top = currentY
       ref.current.style.cursor = 'move'
       ref.current.style.zIndex = '1000'
 
@@ -37,7 +44,6 @@ const useDraggable = <T extends HTMLElement>({
 
       const handleMouseDown = (event: MouseEvent) => {
         if (disabled) return
-
         const offsetX = ref.current!.offsetLeft!
         const offsetY = ref.current!.offsetTop!
 
@@ -47,6 +53,7 @@ const useDraggable = <T extends HTMLElement>({
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)
         onStart({ x: offsetX, y: offsetY })
+        setLastPosition({ x: offsetX, y: offsetY })
       }
 
       const handleMouseMove = (event: MouseEvent) => {
@@ -86,7 +93,9 @@ const useDraggable = <T extends HTMLElement>({
         document.removeEventListener('mouseup', handleMouseUp)
       }
     }
-  }, [x, y])
+  }, [x, y, disabled])
+
+  useLayoutEffect(() => {}, [disabled])
 
   return {
     ref,
