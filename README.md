@@ -1,12 +1,12 @@
-# React-user
+# React-use
 
-React-user is a React hook library that provides a set of useful hooks for React.
+React-use is a React hook library that provides a set of useful hooks for React.
 
 ## Installation
 
 ```bash
-npm install react-user # npm
-pnpm add react-user # pnpm
-bun add react-user # bun
-yarn install react-user # yarn
+npm install react-use # npm
+pnpm add react-use # pnpm
+bun add react-use # bun
+yarn install react-use # yarn
 ```
