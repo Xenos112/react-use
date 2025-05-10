@@ -2,7 +2,10 @@ import type { CSSProperties } from 'react'
 import { useDraggable } from 'react-use'
 
 export default function Draggable() {
-  const [ref, position] = useDraggable<HTMLDivElement>({ x: 100, y: 100 })
+  const [ref, position] = useDraggable<HTMLDivElement>({
+    x: 100,
+    y: 100,
+  })
   const styles: CSSProperties = {
     background: 'var(--vp-c-bg)',
     padding: 10,

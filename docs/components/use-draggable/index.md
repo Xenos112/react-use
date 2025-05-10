@@ -32,7 +32,11 @@ function Draggable() {
 function useDraggable<T extends HTMLElement>(options?: {
   x?: number
   y?: number
-}): [RefObject<T | null>, Position]
+  disabled?: boolean
+  onStart?: (position: Position) => void
+  onMove?: (position: Position) => void
+  onEnd?: (position: Position) => void
+}): [RefObject<T | null>, Position, isDragging: boolean]
 ```
 
 <script setup>

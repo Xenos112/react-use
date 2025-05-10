@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import type { UseDraggableProps, ReturnType } from './types'
+import type { UseDraggableProps, ReturnType, Postion } from './types'
 
 // TODO: add a localStorage key to save the position in the session
 /**
@@ -9,16 +9,20 @@ import type { UseDraggableProps, ReturnType } from './types'
  * @description A hook that makes an element draggable
  * @example const [ref, { x, y }] = useDraggable<HTMLDivElement>({ y: 100 })
  */
-const useDraggable = <T extends HTMLElement>(
-  opts?: UseDraggableProps,
-): ReturnType<T> => {
+const useDraggable = <T extends HTMLElement>({
+  x = 0,
+  y = 0,
+  disabled = false,
+  onStart = (position: Postion = {}) => {},
+  onMove = (position: Postion = {}) => {},
+  onEnd = (position: Postion = {}) => {},
+}: UseDraggableProps = {}): ReturnType<T> => {
   const ref = useRef<T>(null)
-  const x = opts?.x || 0
-  const y = opts?.y || 0
   let startX: number | null = 0
   let startY: number | null = 0
   const [xPosition, setXPosition] = useState(x)
   const [yPosition, setYPostion] = useState(y)
+  const [isDragging, setIsDragging] = useState(false)
 
   useLayoutEffect(() => {
     if (ref.current) {
@@ -32,11 +36,14 @@ const useDraggable = <T extends HTMLElement>(
       ref.current.style.userSelect = 'none'
 
       const handleMouseDown = (event: MouseEvent) => {
+        if (disabled) return
+
         startX = event.clientX - ref.current!.offsetLeft
         startY = event.clientY - ref.current!.offsetTop
 
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)
+        onStart({ x: startX, y: startY })
       }
 
       const handleMouseMove = (event: MouseEvent) => {
@@ -47,6 +54,9 @@ const useDraggable = <T extends HTMLElement>(
           ref.current!.style.left = newLeft + 'px'
           ref.current!.style.top = newTop + 'px'
 
+          onMove({ x: newLeft, y: newTop })
+          setIsDragging(true)
+
           setXPosition(newLeft)
           setYPostion(newTop)
         }
@@ -55,6 +65,8 @@ const useDraggable = <T extends HTMLElement>(
       const handleMouseUp = () => {
         startX = null
         startY = null
+        onEnd({ x: xPosition, y: yPosition })
+        setIsDragging(false)
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
       }
@@ -70,7 +82,11 @@ const useDraggable = <T extends HTMLElement>(
     }
   }, [x, y])
 
-  return [ref, { x: xPosition, y: yPosition }]
+  return {
+    ref,
+    position: { x: xPosition, y: yPosition },
+    isDragging,
+  }
 }
 
 export default useDraggable
