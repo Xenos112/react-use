@@ -3,9 +3,11 @@ title: useDraggable
 description: A hook that makes an element draggable
 ---
 
-<div ref="el"></div>
-<div ref="elEvents"></div>
-<div ref="elDisabled"></div>
+<div>
+    <div ref="el"></div>
+    <div ref="elEvents"></div>
+    <div ref="elDisabled"></div>
+</div>
 
 # useDraggable
 
