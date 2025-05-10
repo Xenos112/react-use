@@ -1,10 +1,12 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { useDraggable } from 'react-use'
 
 export default function Draggable() {
+  const [disabled, setDisabled] = useState(true)
   const { ref, position } = useDraggable<HTMLDivElement>({
-    x: 100,
-    y: 100,
+    x: 300,
+    y: 40,
+    disabled,
   })
   const styles: CSSProperties = {
     background: 'var(--vp-c-bg)',
@@ -15,7 +17,11 @@ export default function Draggable() {
 
   return (
     <div style={styles} ref={ref}>
-      Drag me 🥳
+      {disabled ? "You can't drag me 😔" : 'Drag me 🥳'}
+      <br />
+      <button onClick={() => setDisabled((prev) => !prev)}>
+        {disabled ? 'Enable' : 'Disable'} dragging
+      </button>
       <br />
       {position.x}x{position.y}
     </div>
