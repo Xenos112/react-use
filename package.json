@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
+    "docs:dev": "vitepress dev docs --port 3001",
     "start": "vite --port 3000",
     "build": "vite build && tsc",
     "serve": "vite preview",
@@ -37,6 +38,7 @@
     "typescript": "^5.7.2",
     "unocss": "^66.1.1",
     "vite": "^6.1.0",
+    "vitepress": "^1.6.3",
     "vitest": "^3.0.5",
     "web-vitals": "^4.2.4"
   }
