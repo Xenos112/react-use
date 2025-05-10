@@ -20,13 +20,9 @@ const useDraggable = <T extends HTMLElement>({
   const ref = useRef<T>(null)
   let startX: number | null = 0
   let startY: number | null = 0
-  const [xPosition, setXPosition] = useState(x)
-  const [yPosition, setYPostion] = useState(y)
+  const [position, setPosition] = useState<Postion>({ x, y })
   const [isDragging, setIsDragging] = useState(false)
-  const [lastPosition, setLastPosition] = useState<Postion>({
-    x: xPosition,
-    y: yPosition,
-  })
+  const [lastPosition, setLastPosition] = useState<Postion>({ x: x, y: y })
 
   useLayoutEffect(() => {
     if (ref.current) {
@@ -67,8 +63,7 @@ const useDraggable = <T extends HTMLElement>({
           onMove({ x: newLeft, y: newTop })
           setIsDragging(true)
 
-          setXPosition(newLeft)
-          setYPostion(newTop)
+          setPosition((prev) => ({ ...prev, x: newLeft, y: newTop }))
         }
       }
 
@@ -99,7 +94,7 @@ const useDraggable = <T extends HTMLElement>({
 
   return {
     ref,
-    position: { x: xPosition, y: yPosition },
+    position,
     isDragging,
   }
 }
