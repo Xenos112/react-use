@@ -13,9 +13,9 @@ const useDraggable = <T extends HTMLElement>({
   x = 0,
   y = 0,
   disabled = false,
-  onStart = (position: Postion = {}) => {},
-  onMove = (position: Postion = {}) => {},
-  onEnd = (position: Postion = {}) => {},
+  onStart = (position: Postion = { x: 0, y: 0 }) => {},
+  onMove = (position: Postion = { x: 0, y: 0 }) => {},
+  onEnd = (position: Postion = { x: 0, y: 0 }) => {},
 }: UseDraggableProps = {}): ReturnType<T> => {
   const ref = useRef<T>(null)
   let startX: number | null = 0
@@ -38,12 +38,15 @@ const useDraggable = <T extends HTMLElement>({
       const handleMouseDown = (event: MouseEvent) => {
         if (disabled) return
 
-        startX = event.clientX - ref.current!.offsetLeft
-        startY = event.clientY - ref.current!.offsetTop
+        const offsetX = ref.current!.offsetLeft!
+        const offsetY = ref.current!.offsetTop!
+
+        startX = event.clientX - offsetX
+        startY = event.clientY - offsetY
 
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)
-        onStart({ x: startX, y: startY })
+        onStart({ x: offsetX, y: offsetY })
       }
 
       const handleMouseMove = (event: MouseEvent) => {
@@ -65,7 +68,10 @@ const useDraggable = <T extends HTMLElement>({
       const handleMouseUp = () => {
         startX = null
         startY = null
-        onEnd({ x: xPosition, y: yPosition })
+        const offsetX = ref.current!.offsetLeft!
+        const offsetY = ref.current!.offsetTop!
+
+        onEnd({ x: offsetX, y: offsetY })
         setIsDragging(false)
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
