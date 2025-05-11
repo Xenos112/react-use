@@ -14,6 +14,7 @@ const useDraggable = <T extends HTMLElement>({
   y = 0,
   disabled = false,
   axis = 'both',
+  preventDefault = false,
   onStart = (position: Postion = { x: 0, y: 0 }) => {},
   onMove = (position: Postion = { x: 0, y: 0 }) => {},
   onEnd = (position: Postion = { x: 0, y: 0 }) => {},
@@ -40,6 +41,7 @@ const useDraggable = <T extends HTMLElement>({
       ref.current.style.userSelect = 'none'
 
       const handleMouseDown = (event: MouseEvent) => {
+        if (preventDefault) event.preventDefault()
         if (disabled) return
         const offsetX = ref.current!.offsetLeft!
         const offsetY = ref.current!.offsetTop!
@@ -54,6 +56,7 @@ const useDraggable = <T extends HTMLElement>({
       }
 
       const handleMouseMove = (event: MouseEvent) => {
+        if (preventDefault) event.preventDefault()
         if (startX !== null && startY !== null) {
           const newLeft = event.clientX - startX
           const newTop = event.clientY - startY

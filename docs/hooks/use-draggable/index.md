@@ -102,6 +102,7 @@ function useDraggable<T extends HTMLElement>(options?: {
   y?: number
   disabled?: boolean
   axis?: Axis
+  preventDefault?: boolean
   onStart?: (position: Position) => void
   onMove?: (position: Position) => void
   onEnd?: (position: Position) => void

@@ -17,4 +17,5 @@ export type UseDraggableProps = {
   onEnd?: (position: Postion) => void
   disabled?: boolean
   axis?: Axis
+  preventDefault?: boolean
 }
