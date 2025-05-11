@@ -1,7 +1,14 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+} from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { useDraggable } from '../hooks'
 import type { UseDraggableProps } from '../hooks/use-draggable/types.ts'
+import { useState } from 'react'
 
 const getText = (screen: any) => {
   const text = screen.getByText(/.*x: (.*), y: (.*), isDragging: (.*)/)
@@ -17,6 +24,7 @@ const DraggableComponent = ({
   x = 0,
   y = 0,
   disabled = false,
+  axis = 'both',
   onStart = () => {},
   onMove = () => {},
   onEnd = () => {},
@@ -24,6 +32,7 @@ const DraggableComponent = ({
   const { ref, position, isDragging } = useDraggable<HTMLDivElement>({
     x,
     y,
+    axis,
     disabled,
     onStart,
     onMove,
@@ -138,6 +147,40 @@ describe('useDraggable', () => {
     expect(isDragging).toBe('false')
     expect(draggable.style.left).toMatch(/^50.*/)
     expect(draggable.style.top).toMatch(/^50.*/)
+  })
+
+  it('should not move when disabled, but should move after enabling', () => {
+    const { result } = renderHook(() => useState(true)) // disabled = true initially
+    const [disabled, setDisabled] = result.current
+
+    const { rerender } = render(
+      <DraggableComponent disabled={disabled} x={50} y={50} />,
+    )
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, { clientX: 100, clientY: 200 })
+    fireEvent.mouseUp(draggable)
+
+    let { x, y } = getText(screen)
+
+    expect(x).toBe('50')
+    expect(y).toBe('50')
+    expect(draggable.style.left).toMatch(/^50.*/)
+    expect(draggable.style.top).toMatch(/^50.*/)
+
+    setDisabled(false)
+    rerender(<DraggableComponent disabled={false} />)
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, { clientX: 150, clientY: 150 })
+    fireEvent.mouseUp(draggable)
+
+    const { x: newX, y: newY } = getText(screen)
+
+    expect(newX).not.toBe('50')
+    expect(newY).not.toBe('50')
   })
 
   it('should run the onStart when you pick the element', async () => {
@@ -272,5 +315,91 @@ describe('useDraggable', () => {
 
     const { isDragging } = getText(screen)
     expect(isDragging).toBe('false')
+  })
+
+  it('should move in the x only', () => {
+    render(<DraggableComponent axis="x" />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, {
+      clientX: 100,
+      clientY: 200,
+    })
+    fireEvent.mouseUp(draggable)
+
+    const { x, y } = getText(screen)
+    expect(x).toBe('100')
+    expect(y).toBe('0')
+  })
+
+  it('should move in the y only', () => {
+    render(<DraggableComponent axis="y" />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, {
+      clientX: 100,
+      clientY: 200,
+    })
+    fireEvent.mouseUp(draggable)
+
+    const { x, y } = getText(screen)
+    expect(x).toBe('0')
+    expect(y).toBe('200')
+  })
+
+  it('should move in the both axis', () => {
+    render(<DraggableComponent axis="both" />) // default value
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, {
+      clientX: 100,
+      clientY: 200,
+    })
+    fireEvent.mouseUp(draggable)
+
+    const { x, y } = getText(screen)
+    expect(x).toBe('100')
+    expect(y).toBe('200')
+  })
+
+  it('should toggle the axis', () => {
+    const { result } = renderHook(() => useState<'x' | 'y'>('x'))
+
+    const [axis, setAxis] = result.current
+
+    const { rerender } = render(<DraggableComponent axis={axis} />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, {
+      clientX: 100,
+      clientY: 200,
+    })
+    fireEvent.mouseUp(draggable)
+
+    let { x, y } = getText(screen)
+    expect(x).toBe('100')
+    expect(y).toBe('0')
+
+    setAxis('y')
+    rerender(<DraggableComponent axis={'y'} />)
+
+    fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
+    fireEvent.mouseMove(draggable, {
+      clientX: 200,
+      clientY: 300,
+    })
+    fireEvent.mouseUp(draggable)
+
+    const { x: newX, y: newY } = getText(screen)
+    expect(newX).toBe('100')
+    expect(newY).toBe('300')
   })
 })

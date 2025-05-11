@@ -7,6 +7,7 @@ description: A hook that makes an element draggable
     <div ref="el"></div>
     <div ref="elEvents"></div>
     <div ref="elDisabled"></div>
+    <div ref="elAxis"></div>
 </div>
 
 # useDraggable
@@ -72,6 +73,25 @@ function Draggable() {
 }
 ```
 
+### Axis
+
+```tsx{7}
+import { useDraggable } from 'react-use'
+
+function Draggable() {
+  const { ref, position } = useDraggable({
+    x: 100,
+    y: 100,
+    axis: 'x', // move only in the x axis
+  })
+  return (
+    <div ref={ref}>
+      Drag me {position.x}x{position.y}
+    </div>
+  )
+}
+```
+
 ## Reference
 
 ### useDraggable
@@ -81,6 +101,7 @@ function useDraggable<T extends HTMLElement>(options?: {
   x?: number
   y?: number
   disabled?: boolean
+  axis?: Axis
   onStart?: (position: Position) => void
   onMove?: (position: Position) => void
   onEnd?: (position: Position) => void
@@ -94,10 +115,12 @@ import { ref, onMounted } from 'vue'
 import Draggable from './use-draggable.tsx'
 import DraggableEvents from './use-draggable-events.tsx'
 import DraggableDisabled from './use-draggable-disabled.tsx'
+import DraggableAxis from './use-draggable-axis.tsx'
 
 const el = ref()
 const elEvents = ref()
 const elDisabled = ref()
+const elAxis = ref()
 
 onMounted(() => {
   const root1 = createRoot(el.value)
@@ -108,5 +131,8 @@ onMounted(() => {
 
   const root3 = createRoot(elDisabled.value)
   root3.render(createElement(DraggableDisabled, {}, null))
+
+  const root4 = createRoot(elAxis.value)
+  root4.render(createElement(DraggableAxis, {}, null))
 })
 </script>

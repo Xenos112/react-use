@@ -1,6 +1,7 @@
 import { type RefObject } from 'react'
 
 export type Postion = { x: number; y: number }
+export type Axis = 'x' | 'y' | 'both'
 
 export type ReturnType<T> = {
   ref: RefObject<T | null>
@@ -15,4 +16,5 @@ export type UseDraggableProps = {
   onMove?: (position: Postion) => void
   onEnd?: (position: Postion) => void
   disabled?: boolean
+  axis?: Axis
 }

@@ -13,6 +13,7 @@ const useDraggable = <T extends HTMLElement>({
   x = 0,
   y = 0,
   disabled = false,
+  axis = 'both',
   onStart = (position: Postion = { x: 0, y: 0 }) => {},
   onMove = (position: Postion = { x: 0, y: 0 }) => {},
   onEnd = (position: Postion = { x: 0, y: 0 }) => {},
@@ -57,13 +58,25 @@ const useDraggable = <T extends HTMLElement>({
           const newLeft = event.clientX - startX
           const newTop = event.clientY - startY
 
-          ref.current!.style.left = newLeft + 'px'
-          ref.current!.style.top = newTop + 'px'
-
           onMove({ x: newLeft, y: newTop })
           setIsDragging(true)
 
-          setPosition((prev) => ({ ...prev, x: newLeft, y: newTop }))
+          switch (axis) {
+            case 'x':
+              ref.current!.style.left = newLeft + 'px'
+              setPosition((prev) => ({ ...prev, x: newLeft }))
+              break
+            case 'y':
+              ref.current!.style.top = newTop + 'px'
+              setPosition((prev) => ({ ...prev, y: newTop }))
+              break
+            case 'both':
+            default:
+              ref.current!.style.left = newLeft + 'px'
+              ref.current!.style.top = newTop + 'px'
+              setPosition({ x: newLeft, y: newTop })
+              break
+          }
         }
       }
 
@@ -88,7 +101,7 @@ const useDraggable = <T extends HTMLElement>({
         document.removeEventListener('mouseup', handleMouseUp)
       }
     }
-  }, [x, y, disabled])
+  }, [x, y, disabled, axis])
 
   useLayoutEffect(() => {}, [disabled])
 
