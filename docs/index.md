@@ -30,6 +30,10 @@ features:
     icon:
       src: /ts.svg
     details: TypeScript support out of the box for all hooks
+  - title: Stateful
+    icon:
+      src: /state.svg
+    details: All hooks are stateful
 ---
 
 <style>
