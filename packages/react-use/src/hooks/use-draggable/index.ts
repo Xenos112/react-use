@@ -5,9 +5,9 @@ import type { UseDraggableProps, ReturnType, Postion } from './types'
 /**
  * useDraggable
  * @param opts
- * @returns [RefObject<T | null>, { x: number; y: number }]
+ * @returns {ref: RefObject<T | null>, position:{ x: number; y: number }, isDragging: boolean}
  * @description A hook that makes an element draggable
- * @example const [ref, { x, y }] = useDraggable<HTMLDivElement>({ y: 100 })
+ * @example const { ref, position,isDragging } = useDraggable<HTMLDivElement>({ y: 100 })
  */
 const useDraggable = <T extends HTMLElement>({
   x = 0,
