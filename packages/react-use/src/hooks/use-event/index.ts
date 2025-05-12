@@ -3,8 +3,8 @@ import type {
   EventHandler,
   EventTypes,
   TargetElement,
-  Event,
   UseEventProps,
+  EventT,
 } from './types'
 import { isRef } from '../../utils/isRef'
 
@@ -37,7 +37,7 @@ const useEvent = <T extends EventTypes>(
     const targetElement = isRef(target) ? target.current : target
 
     if (!targetElement) return
-    const eventListener = (event: Event<T>) => savedHandler.current(event)
+    const eventListener = (event: EventT<T>) => savedHandler.current(event)
     targetElement.addEventListener(
       type,
       eventListener as EventListener,
