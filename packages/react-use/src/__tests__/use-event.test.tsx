@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { renderHook } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { useEvent } from '../hooks'
 import { useRef } from 'react'
 
