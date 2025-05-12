@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react'
-import type { EventHandler, TargetElement, UseEventProps } from './types'
+import type {
+  EventHandler,
+  EventTypes,
+  TargetElement,
+  Event,
+  UseEventProps,
+} from './types'
 import { isRef } from '../../utils/isRef'
 
 /**
@@ -9,8 +15,13 @@ import { isRef } from '../../utils/isRef'
  * @param handler - The callback function to be called when the event is fired.
  * @param target - The element to listen to the event on. Default is window.
  * @param options - The options to pass to the addEventListener method.
+ * @returns Nothing.
+ * @example
+ * const handleClick = () => console.log('Button clicked!')
+ *
+ * useEvent('click', handleClick)
  */
-const useEvent = <T extends keyof DocumentEventMap>(
+const useEvent = <T extends EventTypes>(
   type: T,
   handler: EventHandler<T>,
   target: TargetElement = window,
@@ -26,12 +37,19 @@ const useEvent = <T extends keyof DocumentEventMap>(
     const targetElement = isRef(target) ? target.current : target
 
     if (!targetElement) return
-    const eventListener = (event: Event) =>
-      savedHandler.current(event as DocumentEventMap[T])
-    targetElement.addEventListener(type, eventListener, options)
+    const eventListener = (event: Event<T>) => savedHandler.current(event)
+    targetElement.addEventListener(
+      type,
+      eventListener as EventListener,
+      options,
+    )
 
     return () => {
-      targetElement.removeEventListener(type, eventListener, options)
+      targetElement.removeEventListener(
+        type,
+        eventListener as EventListener,
+        options,
+      )
     }
   }, [type, target, options])
 }
