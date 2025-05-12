@@ -1,5 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
-import type { UseLocalStorageOpts, ReturnType } from './types'
+import { useState } from 'react'
+import type {
+  UseLocalStorageOpts,
+  ReturnType,
+  LocalStorageValue,
+} from './types'
 
 /**
  * useLocalStorage
@@ -11,33 +15,42 @@ import type { UseLocalStorageOpts, ReturnType } from './types'
  */
 const useLocalStorage = <T>(
   key: string,
-  opts?: UseLocalStorageOpts<T>,
+  { initialValue = undefined }: UseLocalStorageOpts<T>,
 ): ReturnType<T> => {
-  const [localStorageValue, setLocalStorageValue] = useState<T | undefined>(
-    () => {
-      if (localStorage.getItem(key)) {
-        return JSON.parse(localStorage.getItem(key)!) as T
-      } else if (opts?.initialValue) {
-        localStorage.setItem(key, JSON.stringify(opts.initialValue))
-        return opts.initialValue
-      }
-      return undefined
-    },
-  )
+  const [localStorageValue, setLocalStorageValue] = useState<
+    LocalStorageValue<T>
+  >(() => {
+    const storedValue = localStorage.getItem(key)
+    if (storedValue) return JSON.parse(storedValue) as T
+    if (initialValue !== undefined) {
+      localStorage.setItem(key, JSON.stringify(initialValue))
+      return initialValue
+    }
 
-  const setValue = useCallback(
-    (value: T | undefined) => {
-      if (value === undefined) {
-        setLocalStorageValue(undefined)
-        localStorage.removeItem(key)
-        return
-      }
+    return
+  })
 
-      setLocalStorageValue(value)
-      localStorage.setItem(key, JSON.stringify(value))
-    },
-    [key],
-  )
+  const setValue = (
+    value:
+      | LocalStorageValue<T>
+      | ((prev: LocalStorageValue<T>) => LocalStorageValue<T>),
+  ) => {
+    const newValue =
+      typeof value === 'function'
+        ? (value as (v: LocalStorageValue<T>) => LocalStorageValue<T>)(
+            localStorageValue,
+          )
+        : value
+
+    if (newValue === undefined) {
+      setLocalStorageValue(undefined)
+      localStorage.removeItem(key)
+    } else {
+      setLocalStorageValue(newValue)
+      localStorage.setItem(key, JSON.stringify(newValue))
+    }
+    return newValue
+  }
 
   return [localStorageValue, setValue]
 }
