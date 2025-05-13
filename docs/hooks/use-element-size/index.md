@@ -16,6 +16,10 @@ A hook work with element sizes in more of a reactive way.
 the hook will return a size object with the width and height of the element.
 <br />
 by default it will listen to the `resize` event on the `ref` object.
+<br />
+the hook uses the `ResizeObserver` API to observe the element.
+<br />
+the hook is derived from the [`useElementBounding`](/hooks/use-element-bounding/) hook.
 
 ```tsx
 import { useRef } from 'react'
