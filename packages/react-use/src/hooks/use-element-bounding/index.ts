@@ -1,5 +1,4 @@
 import { type RefObject, useState, useLayoutEffect } from 'react'
-import type { Bounding } from './types'
 
 /**
  * useElementBounding
@@ -10,7 +9,7 @@ import type { Bounding } from './types'
  */
 const useElementBounding = <T extends HTMLElement>(
   ref: RefObject<T | null>,
-): Bounding => {
+): Omit<DOMRect, 'toJSON'> => {
   const [bounding, setBounding] = useState<Omit<DOMRect, 'toJSON'>>({
     width: 0,
     height: 0,
