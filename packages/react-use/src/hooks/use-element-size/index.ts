@@ -1,6 +1,6 @@
 import { type RefObject, useLayoutEffect, useState } from 'react'
 import type { Size } from './types'
-import useEvent from '../use-event'
+import useElementBounding from '../use-element-bounding'
 
 /**
  * useElementSize
@@ -12,32 +12,9 @@ import useEvent from '../use-event'
 const useElementSize = <T extends HTMLElement>(
   ref: RefObject<T | null>,
 ): Size => {
-  const [size, setSize] = useState<Size>({ width: 0, height: 0 })
+  const { width, height } = useElementBounding(ref)
 
-  useLayoutEffect(() => {
-    if (!ref.current) return
-    const { width, height } = ref.current.getBoundingClientRect()
-    setSize({
-      width,
-      height,
-    })
-  }, [])
-
-  useEvent(
-    'resize',
-    () => {
-      if (!ref.current) return
-
-      const { width, height } = ref.current.getBoundingClientRect()
-      setSize({
-        width,
-        height,
-      })
-    },
-    ref,
-  )
-
-  return size
+  return { width, height }
 }
 
 export default useElementSize
