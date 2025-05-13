@@ -6,6 +6,15 @@ afterEach(() => {
   cleanup()
 })
 
+let global = globalThis as any
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserver
+
 describe('useElementSize', () => {
   it('should return the element size', async () => {
     const element = document.createElement('div')
