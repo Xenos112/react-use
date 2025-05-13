@@ -1,19 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react'
 import useElementSize from '../hooks/use-element-size'
+import resizeObserverMock from './mocks/resize-observer'
 
 afterEach(() => {
   cleanup()
 })
 
-let global = globalThis as any
-global.ResizeObserver = class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
-
-global.ResizeObserver = ResizeObserver
+resizeObserverMock()
 
 describe('useElementSize', () => {
   it('should return the element size', async () => {
