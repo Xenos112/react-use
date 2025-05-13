@@ -2,6 +2,12 @@ import { useState } from 'react'
 import type { Coords } from './types'
 import useEvent from '../use-event'
 
+/**
+ * useMouse
+ *
+ * @returns The mouse position.
+ * @description A hook To work with mouse positions.
+ */
 const useMouse = () => {
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 })
 
