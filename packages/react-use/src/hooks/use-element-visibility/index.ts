@@ -8,6 +8,11 @@ import { useEffect, useState, type RefObject } from 'react'
  */
 const useElementVisibility = <T extends HTMLElement>(
   ref: RefObject<T | null>,
+  {
+    root = null,
+    rootMargin = '0px',
+    threshold = 0,
+  }: IntersectionObserverInit = {},
 ): Readonly<boolean> => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -16,7 +21,7 @@ const useElementVisibility = <T extends HTMLElement>(
       ([entry]) => {
         setIsVisible(entry.isIntersecting)
       },
-      { threshold: 0 },
+      { threshold, root, rootMargin },
     )
 
     const element = ref.current

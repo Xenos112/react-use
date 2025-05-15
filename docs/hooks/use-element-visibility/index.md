@@ -16,6 +16,8 @@ A hook To manage element visibility.
 the `useElementVisibility` hook returns a boolean value that indicates whether the target element is visible or not.
 <br/>
 the `ref` parameter is a `RefObject` that points to the target element.
+<br/>
+`useElementVisibility` accepts an optional `IntersectionObserverInit` parameter that allows you to customize the behavior of the `IntersectionObserver`.
 
 ```tsx
 import { useRef } from 'react'
@@ -40,7 +42,13 @@ export default function UseElementVisibility() {
 ## Types Definitions
 
 ```ts
-const useElementVisibility = <T extends HTMLElement>(ref:RefObject<T | null>): Readonly<boolean>
+const useElementVisibility = <T extends HTMLElement>(ref:RefObject<T | null>,opts?:IntersectionObserverInit): Readonly<boolean>
+
+interface IntersectionObserverInit {
+  root?: Element | null
+  rootMargin?: string
+  threshold?: number
+}
 ```
 
 <script setup>
