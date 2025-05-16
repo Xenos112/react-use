@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import useOnline from '../hooks/use-online'
+import useOnline from '.'
 import { describe, expect, it } from 'vitest'
 
 describe('useOnline', () => {

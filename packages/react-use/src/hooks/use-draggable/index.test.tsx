@@ -6,8 +6,8 @@ import {
   screen,
 } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { useDraggable } from '../hooks'
-import type { UseDraggableProps } from '../hooks/use-draggable/types.ts'
+import useDraggable from '.'
+import type { UseDraggableProps } from './types'
 import { useState } from 'react'
 
 const getText = (screen: any) => {

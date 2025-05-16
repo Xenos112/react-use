@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { useLocalStorage } from '../hooks'
+import { useLocalStorage } from '..'
 
 const localStorageMock = (() => {
   type Store = Record<string, string>

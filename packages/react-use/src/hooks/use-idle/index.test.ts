@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { useIdle } from '../hooks'
+import { useIdle } from '..'
 
 // tests need improvement
 describe('useIdle', () => {

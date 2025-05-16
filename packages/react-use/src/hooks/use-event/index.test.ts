@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import { useEvent } from '../hooks'
+import useEvent from '.'
 import { useRef } from 'react'
 
 describe('useEventListener', () => {
