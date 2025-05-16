@@ -7,4 +7,5 @@ export type ReturnType = {
 
 export type Options = {
   timeout?: number
+  onCopy?: (text: string) => void
 }

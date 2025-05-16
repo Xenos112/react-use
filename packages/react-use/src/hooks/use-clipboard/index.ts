@@ -6,7 +6,10 @@ import type { Options, ReturnType } from './types'
  * @description hook to copy text to the clipboard
  * @returns  ReturnType - the hook returns an object with the copied state, the text to copy and a boolean indicating if the browser supports the clipboard api.
  */
-const useClipboard = ({ timeout = 1000 }: Options = {}): ReturnType => {
+const useClipboard = ({
+  timeout = 1000,
+  onCopy = () => {},
+}: Options = {}): ReturnType => {
   const [copied, setCopied] = useState(false)
   const [text, setText] = useState('')
 
@@ -21,6 +24,7 @@ const useClipboard = ({ timeout = 1000 }: Options = {}): ReturnType => {
 
     if (!isSupported) return
     navigator.clipboard.writeText(text)
+    onCopy(text)
     setText(text)
   }
 
