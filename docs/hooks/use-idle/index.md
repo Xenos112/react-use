@@ -3,7 +3,7 @@ title: useIdle
 description: A hook To detect when the user is idle.
 ---
 
-# useEvent
+# useIdle
 
 A hooks To detect when the user is idle.
 
