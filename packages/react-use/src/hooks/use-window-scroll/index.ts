@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { WindowScroll } from './types'
 import useEvent from '../use-event'
-import { ScrollRestoration } from '@tanstack/react-router'
 
 /**
  * @name useWindowScroll
