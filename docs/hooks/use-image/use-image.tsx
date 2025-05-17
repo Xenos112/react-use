@@ -9,9 +9,7 @@ export default function UseImage() {
     'https://picsum.photos/200/203',
   ]
   const [number, setNumber] = useState(0)
-  const { image, error, isLoading } = useImage({
-    src: urls[number],
-  })
+  const { error, isLoading } = useImage(urls[number])
 
   return (
     <div
@@ -21,9 +19,21 @@ export default function UseImage() {
         padding: '10px',
       }}
     >
-      {image && <img src={image} />}
-      {error && <p>Error: {error}</p>}
-      {isLoading && <p>Loading...</p>}
+      {isLoading ? (
+        <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
+      ) : (
+        <img
+          style={{
+            maxWidth: '200px',
+            maxHeight: '200px',
+            borderRadius: '7px',
+          }}
+          src={urls[number]}
+        />
+      )}
+      {error && (
+        <p style={{ color: 'var(--vp-c-danger-soft)' }}>Error: {error}</p>
+      )}
       <div>
         <button
           style={{

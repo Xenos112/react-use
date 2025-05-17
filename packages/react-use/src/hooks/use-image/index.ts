@@ -1,52 +1,37 @@
 import { useEffect, useState } from 'react'
-import type { UseImageProps, UseImageReturnType } from './types'
+import type { UseImageReturnType } from './types'
 
 /**
  * @name useImage
- * @description a hook to load an image from a url.
+ * @description a hook to track the image loading status.
  * @param opts the options object.
  * @returns the image url, the error and a boolean indicating if the image is loading.
  */
-const useImage = ({
-  src,
-  onLoad = () => {},
-  onError = () => {},
-}: UseImageProps): UseImageReturnType => {
-  const [image, setImage] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+const useImage = (src: string): UseImageReturnType => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<null | string>('')
 
   useEffect(() => {
-    if (!src) {
-      setImage(null)
-      setError('src is required')
-      return
+    const image = new Image()
+    image.src = src
+    image.onload = () => {
+      setIsLoading(false)
+      setError(null)
     }
-    setIsLoading(true)
-    fetch(src, {})
-      .then((res) => res.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(blob)
-        setImage(url)
-        onLoad()
-      })
-      .catch((err) => {
-        onError(err)
-        setError(err)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
 
+    image.onerror = () => {
+      setIsLoading(false)
+      setError('failed to load image')
+    }
     return () => {
-      image && URL.revokeObjectURL(image)
-      setImage(null)
+      image.onload = null
+      image.onerror = null
+      setIsLoading(true)
       setError(null)
     }
   }, [src])
 
   return {
-    image,
     error,
     isLoading,
   }

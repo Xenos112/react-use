@@ -1,11 +1,11 @@
 ---
 title: useImage
-description: A hook to load images in more efficient way.
+description: a hook to track the image loading status.
 ---
 
 # useImage
 
-A hook to load images in more efficient way.
+a hook to track the image loading status.
 
 [[toc]]
 
@@ -13,27 +13,9 @@ A hook to load images in more efficient way.
 
 ### Basic
 
-the `useImage` hook returns an object with the following properties:
-
-- `image`: the image url.
-- `error`: the error message if any.
-- `isLoading`: a boolean indicating if the image is loading.
-  <br />
-  you can pass a `src` prop to the hook to load the image.
-  <br />
-  you cab also pass a `onLoad` and `onError` props to the hook to handle the loading and error events.
-
-```tsx
-const { image, error, isLoading } = useImage({
-  src: 'https://picsum.photos/200/300',
-  onLoad: () => {
-    console.log('image loaded')
-  },
-  onError: (err) => {
-    console.log('error', err)
-  },
-})
-```
+`useImage` will load the image via `Image` constructor and then return a `isLoading` boolean indicating if the image is loading or not.
+<br />
+you can pass a `src` prop to the hook to load the image.
 
 ```tsx
 import { useState } from 'react'
@@ -47,15 +29,12 @@ export default function UseImage() {
     'https://picsum.photos/200/203',
   ]
   const [number, setNumber] = useState(0)
-  const { image, error, isLoading } = useImage({
-    src: urls[number],
-  })
+  const { error, isLoading } = useImage(urls[number])
 
   return (
     <div>
-      {image && <img src={image} />}
+      {isLoading ? <p>Loading...</p> : <img src={urls[number]} />}
       {error && <p>Error: {error}</p>}
-      {isLoading && <p>Loading...</p>}
       <div>
         <button onClick={() => setNumber((number + 1) % urls.length)}>
           Change image
