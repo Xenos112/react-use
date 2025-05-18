@@ -1,4 +1,5 @@
 import { type RefObject, useState, useLayoutEffect } from 'react'
+import useEvent from '../use-event'
 
 /**
  * useElementBounding
@@ -21,23 +22,23 @@ const useElementBounding = <T extends HTMLElement>(
     y: 0,
   })
 
+  const update = () => {
+    if (!ref.current) return
+    const { width, height, top, left, bottom, right, x, y } =
+      ref.current!.getBoundingClientRect()
+    setBounding({
+      width,
+      height,
+      top,
+      left,
+      bottom,
+      right,
+      x,
+      y,
+    })
+  }
   useLayoutEffect(() => {
     if (!ref.current) return
-    const update = () => {
-      const { width, height, top, left, bottom, right, x, y } =
-        ref.current!.getBoundingClientRect()
-      setBounding({
-        width,
-        height,
-        top,
-        left,
-        bottom,
-        right,
-        x,
-        y,
-      })
-    }
-
     update()
 
     const observer = new ResizeObserver(update)
@@ -47,6 +48,8 @@ const useElementBounding = <T extends HTMLElement>(
       observer.disconnect()
     }
   }, [ref])
+
+  useEvent('scroll', update)
 
   return bounding
 }
