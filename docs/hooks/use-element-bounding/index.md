@@ -66,7 +66,7 @@ const demo = ref()
 
 onMounted(() => {
   const root = createRoot(demo.value)
-  root.render(createElement(UseElementSize, {}, null))
+  root.render(createElement(UseElementBounding, {}, null))
 })
 
 </script>
