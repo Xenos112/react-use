@@ -33,7 +33,7 @@ function useElementVisibility<T extends HTMLElement>(
       if (element)
         observer.unobserve(element)
     }
-  }, [ref])
+  }, [ref, root, rootMargin, threshold])
 
   return isVisible
 }

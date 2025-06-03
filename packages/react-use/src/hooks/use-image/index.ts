@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 /**
  * @name useImage
  * @description a hook to track the image loading status.
- * @param opts the options object.
+ * @param src the options object.
  * @returns the image url, the error and a boolean indicating if the image is loading.
  */
 function useImage(src: string): UseImageReturnType {

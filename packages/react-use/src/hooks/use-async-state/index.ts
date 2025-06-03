@@ -34,7 +34,7 @@ function useAsyncState<T>(
       .finally(() => {
         setIsLoading(false)
       })
-  }, [])
+  }, [asyncFn, onSuccess, onError])
 
   return {
     data,

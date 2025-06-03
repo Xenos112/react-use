@@ -5,7 +5,8 @@ import { useLayoutEffect, useRef, useState } from 'react'
 /**
  * useDraggable
  * @param opts
- * @returns {ref: RefObject<T | null>, position:{ x: number; y: number }, isDragging: boolean}
+ * @returns {ref: RefObject<T | null>, position:{ x: number; y: number }, isDragging: boolean} -
+ * a ref and position object and boolean to indicate the state of drag
  * @description A hook that makes an element draggable
  * @example const { ref, position,isDragging } = useDraggable<HTMLDivElement>({ y: 100 })
  */
@@ -15,9 +16,9 @@ function useDraggable<T extends HTMLElement>({
   disabled = false,
   axis = 'both',
   preventDefault = false,
-  onStart = (position: Postion = { x: 0, y: 0 }) => {},
-  onMove = (position: Postion = { x: 0, y: 0 }) => {},
-  onEnd = (position: Postion = { x: 0, y: 0 }) => {},
+  onStart = (position: Postion = { x: 0, y: 0 }) => { },
+  onMove = (position: Postion = { x: 0, y: 0 }) => { },
+  onEnd = (position: Postion = { x: 0, y: 0 }) => { },
 }: UseDraggableProps = {}): ReturnType<T> {
   const ref = useRef<T>(null)
   let startX: number | null = 0
@@ -109,7 +110,7 @@ function useDraggable<T extends HTMLElement>({
     }
   }, [x, y, disabled, axis])
 
-  useLayoutEffect(() => {}, [disabled])
+  useLayoutEffect(() => { }, [disabled])
 
   return {
     ref,

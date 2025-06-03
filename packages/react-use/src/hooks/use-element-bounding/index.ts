@@ -1,10 +1,9 @@
 import type { RefObject } from 'react'
-import { useLayoutEffect, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import useEvent from '../use-event'
 
 /**
- * useElementBounding
- *
+ * @name useElementBounding
  * @param ref - The ref object to observe.
  * @returns The bounding object.
  * @description A hook work with element boundings in more of a reactive way.
@@ -23,7 +22,7 @@ function useElementBounding<T extends HTMLElement>(
     y: 0,
   })
 
-  const update = () => {
+  const update = useCallback(() => {
     if (!ref.current)
       return
     const { width, height, top, left, bottom, right, x, y }
@@ -38,7 +37,8 @@ function useElementBounding<T extends HTMLElement>(
       x,
       y,
     })
-  }
+  }, [ref])
+
   useLayoutEffect(() => {
     if (!ref.current)
       return
@@ -50,7 +50,7 @@ function useElementBounding<T extends HTMLElement>(
     return () => {
       observer.disconnect()
     }
-  }, [ref])
+  }, [ref, update])
 
   useEvent('scroll', update)
 

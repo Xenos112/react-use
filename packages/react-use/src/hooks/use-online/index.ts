@@ -2,8 +2,8 @@ import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
- * useOnline
- * @returns {boolean}
+ * @name useOnline
+ * @returns {boolean} - boolean to indicate if the user is online
  * @description A hook that returns true if the user is online
  * @example const isOnline = useOnline()
  */

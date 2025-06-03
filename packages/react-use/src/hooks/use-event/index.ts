@@ -9,16 +9,14 @@ import { useEffect, useRef } from 'react'
 import { isRef } from '../../utils/isRef'
 
 /**
- * A hook that handles events in a very simple way.
- *
+ * @name useEvent
+ * @description A hook that handles events in a very simple way.
  * @param type - The type of event to listen to.
  * @param handler - The callback function to be called when the event is fired.
  * @param target - The element to listen to the event on. Default is window.
  * @param options - The options to pass to the addEventListener method.
- * @returns Nothing.
  * @example
  * const handleClick = () => console.log('Button clicked!')
- *
  * useEvent('click', handleClick)
  */
 function useEvent<T extends EventTypes>(
@@ -39,6 +37,7 @@ function useEvent<T extends EventTypes>(
     if (!targetElement)
       return
     const eventListener = (event: EventT<T>) => savedHandler.current(event)
+    // eslint-disable-next-line react-web-api/no-leaked-event-listener
     targetElement.addEventListener(
       type,
       eventListener as EventListener,

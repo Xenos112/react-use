@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react'
 import useEvent from '../use-event'
 
 /**
- * useIdle
- *
- * @returns {isIdle: boolean, lastActive: number}
+ * @name useIdle
+ * @returns {isIdle: boolean, lastActive: number} - object that have details about the idle
  * @description A hook To detect when the user is idle.
  * @example const { isIdle, lastActive } = useIdle()
  */
