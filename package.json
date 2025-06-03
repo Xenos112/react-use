@@ -1,5 +1,5 @@
 {
-  "name": "@reacty-use/docs",
+  "name": "@use-reacty/docs",
   "type": "module",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "reacty-use": "workspace:*"
+    "use-reacty": "workspace:*"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.2",

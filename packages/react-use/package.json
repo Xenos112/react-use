@@ -1,6 +1,6 @@
 {
-  "name": "reacty-use",
-  "version": "0.0.0",
+  "name": "use-reacty",
+  "version": "0.0.1",
   "description": "React hooks",
   "exports": {
     ".": {
