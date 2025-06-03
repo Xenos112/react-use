@@ -1,7 +1,17 @@
 {
   "name": "use-reacty",
   "version": "0.0.1",
-  "description": "React hooks",
+  "description": "React hooks library",
+  "license": "MIT",
+  "homepage": "https://github.com/Xenos112/use-reacty#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xenos112/use-reacty.git",
+    "directory": "packages/use-reacty"
+  },
+  "bugs": {
+    "url": "https://github.com/Xenos112/use-reacty/issues"
+  },
   "keywords": [
     "react",
     "hooks",
