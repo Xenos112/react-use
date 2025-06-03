@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import type { Coords } from './types'
+import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
@@ -8,7 +8,7 @@ import useEvent from '../use-event'
  * @returns The mouse position.
  * @description A hook To work with mouse positions.
  */
-const useMouse = () => {
+function useMouse() {
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 })
 
   useEvent('pointermove', (e) => {

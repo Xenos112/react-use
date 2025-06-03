@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react'
 import { fireEvent } from '@testing-library/dom'
-import useMouse from '.'
+import { act, renderHook } from '@testing-library/react'
 import { beforeAll, describe, expect, it } from 'vitest'
+import useMouse from '.'
 
 class MockPointerEvent extends Event {
   clientX: number

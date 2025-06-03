@@ -24,7 +24,10 @@ export default function UseIdle() {
   const isOnline = useOnline()
   return (
     <div>
-      <span>isOnline: {isOnline ? 'true' : 'false'}</span>
+      <span>
+        isOnline:
+        {isOnline ? 'true' : 'false'}
+      </span>
     </div>
   )
 }

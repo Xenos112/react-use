@@ -30,7 +30,10 @@ export default function UseElementSize() {
   const size = useElementSize(ref)
   return (
     <div ref={ref}>
-      {size.width} x {size.height}
+      {size.width}
+      {' '}
+      x
+      {size.height}
     </div>
   )
 }

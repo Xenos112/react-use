@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react'
-import useElementVisibility from '.'
+import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
+import useElementVisibility from '.'
 
 // TODO: should  move this to a test-utils file
 class MockIntersectionObserver {

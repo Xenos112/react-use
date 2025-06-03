@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import type { UseAsyncStateOptions, UseAsyncStateReturnType } from './types'
+import { useEffect, useState } from 'react'
 
 /**
  * @name useAsyncState
@@ -8,10 +8,10 @@ import type { UseAsyncStateOptions, UseAsyncStateReturnType } from './types'
  * @param opts The options object.
  * @returns The data, the error and a boolean indicating if the data is loading or not.
  */
-const useAsyncState = <T>(
+function useAsyncState<T>(
   asyncFn: () => Promise<T>,
   { onSuccess, onError }: UseAsyncStateOptions<T> = {},
-): UseAsyncStateReturnType<T> => {
+): UseAsyncStateReturnType<T> {
   const [data, setData] = useState<T | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [isLoading, setIsLoading] = useState(false)

@@ -6,11 +6,12 @@ import { useEffect, useState } from 'react'
  * @param target the file or blob to create an object url from.
  * @returns the object url.
  */
-const useObjectUrl = (target?: File | Blob | MediaSource) => {
+function useObjectUrl(target?: File | Blob | MediaSource) {
   const [objectUrl, setObjectUrl] = useState<string>()
 
   useEffect(() => {
-    if (!target) return
+    if (!target)
+      return
     const url = URL.createObjectURL(target)
     setObjectUrl(url)
 

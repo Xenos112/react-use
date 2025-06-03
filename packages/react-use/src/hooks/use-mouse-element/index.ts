@@ -1,5 +1,6 @@
-import { type RefObject, useState } from 'react'
+import type { RefObject } from 'react'
 import type { Coords } from '../use-mouse/types'
+import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
@@ -9,9 +10,9 @@ import useEvent from '../use-event'
  * @returns The mouse position.
  * @description A hook To work with mouse positions.
  */
-const useMouseElement = <T extends HTMLElement>(
+function useMouseElement<T extends HTMLElement>(
   ref: RefObject<T | null>,
-): Readonly<Coords> => {
+): Readonly<Coords> {
   const [coords, setCoords] = useState<Coords>({
     x: 0,
     y: 0,
@@ -20,7 +21,8 @@ const useMouseElement = <T extends HTMLElement>(
   useEvent(
     'pointermove',
     (event) => {
-      if (!ref.current) return
+      if (!ref.current)
+        return
       setCoords({
         x: event.offsetX,
         y: event.offsetY,

@@ -22,9 +22,13 @@ export default function UseIdle() {
   const position = useMouse()
   return (
     <div>
-      x: {position.x}
+      x:
+      {' '}
+      {position.x}
       <br />
-      y: {position.y}
+      y:
+      {' '}
+      {position.y}
     </div>
   )
 }

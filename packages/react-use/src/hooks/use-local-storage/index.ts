@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import type {
-  UseLocalStorageOpts,
-  ReturnType,
   LocalStorageValue,
+  ReturnType,
+  UseLocalStorageOpts,
 } from './types'
+import { useState } from 'react'
 
 /**
  * useLocalStorage
@@ -13,21 +13,20 @@ import type {
  * @description A hook that allows you to use localStorage in more type-safe way
  * @example const [value, setValue] = useLocalStorage<string>('key', { initialValue: 'value' })
  */
-const useLocalStorage = <T>(
+function useLocalStorage<T>(
   key: string,
   { initialValue = undefined }: UseLocalStorageOpts<T>,
-): ReturnType<T> => {
+): ReturnType<T> {
   const [localStorageValue, setLocalStorageValue] = useState<
     LocalStorageValue<T>
   >(() => {
     const storedValue = localStorage.getItem(key)
-    if (storedValue) return JSON.parse(storedValue) as T
+    if (storedValue)
+      return JSON.parse(storedValue) as T
     if (initialValue !== undefined) {
       localStorage.setItem(key, JSON.stringify(initialValue))
       return initialValue
     }
-
-    return
   })
 
   const setValue = (
@@ -35,8 +34,8 @@ const useLocalStorage = <T>(
       | LocalStorageValue<T>
       | ((prev: LocalStorageValue<T>) => LocalStorageValue<T>),
   ) => {
-    const newValue =
-      typeof value === 'function'
+    const newValue
+      = typeof value === 'function'
         ? (value as (v: LocalStorageValue<T>) => LocalStorageValue<T>)(
             localStorageValue,
           )
@@ -45,7 +44,8 @@ const useLocalStorage = <T>(
     if (newValue === undefined) {
       setLocalStorageValue(undefined)
       localStorage.removeItem(key)
-    } else {
+    }
+    else {
       setLocalStorageValue(newValue)
       localStorage.setItem(key, JSON.stringify(newValue))
     }

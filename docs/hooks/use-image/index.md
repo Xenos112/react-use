@@ -34,7 +34,12 @@ export default function UseImage() {
   return (
     <div>
       {isLoading ? <p>Loading...</p> : <img src={urls[number]} />}
-      {error && <p>Error: {error}</p>}
+      {error && (
+        <p>
+          Error:
+          {error}
+        </p>
+      )}
       <div>
         <button onClick={() => setNumber((number + 1) % urls.length)}>
           Change image
@@ -54,13 +59,13 @@ export default function UseImage() {
 ```ts
 const useImage: ({ src, onLoad, onError }: UseImageProps) => UseImageReturnType
 
-type UseImageProps = {
+interface UseImageProps {
   src: string
   onLoad?: () => void
   onError?: (err: Error) => void
 }
 
-type UseImageReturnType = {
+interface UseImageReturnType {
   image: string | null
   error: string | null
   isLoading: boolean

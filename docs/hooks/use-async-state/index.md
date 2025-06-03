@@ -20,7 +20,7 @@ import { useAsyncState } from 'react-use'
 
 export default function UseAsyncState() {
   const { data, error, isLoading } = useAsyncState(() =>
-    fetch('https://jsonplaceholder.typicode.com/todos/1').then((res) =>
+    fetch('https://jsonplaceholder.typicode.com/todos/1').then(res =>
       res.json(),
     ),
   )
@@ -28,7 +28,12 @@ export default function UseAsyncState() {
   return (
     <div>
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
+      {error && (
+        <p>
+          Error:
+          {error.message}
+        </p>
+      )}
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
@@ -47,7 +52,7 @@ import { useAsyncState } from 'react-use'
 export default function UseAyncState() {
   const { data, error, isLoading } = useAsyncState(() =>
     fetch('https://jsonplaceholder.typicode.com/todos/1').then(
-      (res) => res.json(),
+      res => res.json(),
       {
         onSuccess: (data) => {
           console.log('onSuccess', data)
@@ -62,7 +67,12 @@ export default function UseAyncState() {
   return (
     <div>
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
+      {error && (
+        <p>
+          Error:
+          {error.message}
+        </p>
+      )}
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )

@@ -28,7 +28,11 @@ export default function UseWindowScroll() {
         <button onClick={() => scrollX(100)}>Scroll Right</button>
       </div>
       <div>
-        Position: {x},{y}
+        Position:
+        {' '}
+        {x}
+        ,
+        {y}
       </div>
     </div>
   )

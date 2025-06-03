@@ -130,18 +130,21 @@ function useDraggable<T extends HTMLElement>(options?: {
   onStart?: (position: Position) => void
   onMove?: (position: Position) => void
   onEnd?: (position: Position) => void
-}): { ref: RefObject<T | null>; position: Position; isDragging: boolean }
+}): { ref: RefObject<T | null>, position: Position, isDragging: boolean }
 
-type Postion = { x: number; y: number }
+interface Postion {
+  x: number
+  y: number
+}
 type Axis = 'x' | 'y' | 'both'
 
-type ReturnType<T> = {
+interface ReturnType<T> {
   ref: RefObject<T | null>
   position: Postion
   isDragging: boolean
 }
 
-type UseDraggableProps = {
+interface UseDraggableProps {
   x?: number
   y?: number
   onStart?: (position: Postion) => void

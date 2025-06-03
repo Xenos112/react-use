@@ -34,9 +34,12 @@ export default function UseClipboard() {
       <input
         type="text"
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={e => setInput(e.target.value)}
       />
-      <p>text: {text}</p>
+      <p>
+        text:
+        {text}
+      </p>
     </div>
   )
 }

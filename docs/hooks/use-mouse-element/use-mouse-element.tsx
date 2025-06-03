@@ -26,9 +26,13 @@ export default function UseMouseElement() {
           padding: '10px',
         }}
       >
-        x: {position.x}
+        x:
+        {' '}
+        {position.x}
         <br />
-        y: {position.y}
+        y:
+        {' '}
+        {position.y}
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
-import { useState, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
+import { useState } from 'react'
 import { useDraggable } from 'react-use'
 
 export default function DraggableEvents() {
@@ -30,11 +31,15 @@ export default function DraggableEvents() {
 
   return (
     <div style={styles} ref={ref}>
-      Drag me {state}
+      Drag me
+      {' '}
+      {state}
       <br />
       Take a look at the console 👀
       <br />
-      {position.x}x{position.y}
+      {position.x}
+      x
+      {position.y}
     </div>
   )
 }

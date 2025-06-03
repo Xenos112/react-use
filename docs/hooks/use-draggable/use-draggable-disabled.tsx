@@ -1,4 +1,5 @@
-import { useState, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
+import { useState } from 'react'
 import { useDraggable } from 'react-use'
 
 export default function Draggable() {
@@ -17,13 +18,17 @@ export default function Draggable() {
 
   return (
     <div style={styles} ref={ref}>
-      {disabled ? "You can't drag me 😔" : 'Drag me 🥳'}
+      {disabled ? 'You can\'t drag me 😔' : 'Drag me 🥳'}
       <br />
-      <button onClick={() => setDisabled((prev) => !prev)}>
-        {disabled ? 'Enable' : 'Disable'} dragging
+      <button onClick={() => setDisabled(prev => !prev)}>
+        {disabled ? 'Enable' : 'Disable'}
+        {' '}
+        dragging
       </button>
       <br />
-      {position.x}x{position.y}
+      {position.x}
+      x
+      {position.y}
     </div>
   )
 }

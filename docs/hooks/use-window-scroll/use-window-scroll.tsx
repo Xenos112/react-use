@@ -45,7 +45,11 @@ export default function UseWindowScroll() {
           zIndex: 100,
         }}
       >
-        x:{x} y:{y}
+        x:
+        {x}
+        {' '}
+        y:
+        {y}
       </div>
     </div>
   )

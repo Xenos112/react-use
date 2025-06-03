@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+
 export default defineConfig({
   title: 'React Use',
   description: 'A collection of React hooks',

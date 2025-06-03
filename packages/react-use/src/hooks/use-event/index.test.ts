@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
+import { useRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import useEvent from '.'
-import { useRef } from 'react'
 
 describe('useEventListener', () => {
   it('should run the callback when the event is fired', async () => {

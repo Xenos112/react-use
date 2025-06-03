@@ -1,3 +1,4 @@
+import type { UseDraggableProps } from './types'
 import {
   cleanup,
   fireEvent,
@@ -5,12 +6,11 @@ import {
   renderHook,
   screen,
 } from '@testing-library/react'
+import { useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import useDraggable from '.'
-import type { UseDraggableProps } from './types'
-import { useState } from 'react'
 
-const getText = (screen: any) => {
+function getText(screen: any) {
   const text = screen.getByText(/.*x: (.*), y: (.*), isDragging: (.*)/)
   const match = text.textContent?.match(/x: (.*), y: (.*), isDragging: (.*)/)
   const x = match?.[1]
@@ -20,7 +20,7 @@ const getText = (screen: any) => {
   return { x, y, isDragging }
 }
 
-const DraggableComponent = ({
+function DraggableComponent({
   x = 0,
   y = 0,
   disabled = false,
@@ -28,7 +28,7 @@ const DraggableComponent = ({
   onStart = () => {},
   onMove = () => {},
   onEnd = () => {},
-}: UseDraggableProps) => {
+}: UseDraggableProps) {
   const { ref, position, isDragging } = useDraggable<HTMLDivElement>({
     x,
     y,
@@ -50,7 +50,8 @@ const DraggableComponent = ({
         }}
       >
         <p>
-          Position:{' '}
+          Position:
+          {' '}
           {`x: ${position.x}, y: ${position.y}, isDragging: ${isDragging}`}
         </p>
       </div>
@@ -163,7 +164,7 @@ describe('useDraggable', () => {
     fireEvent.mouseMove(draggable, { clientX: 100, clientY: 200 })
     fireEvent.mouseUp(draggable)
 
-    let { x, y } = getText(screen)
+    const { x, y } = getText(screen)
 
     expect(x).toBe('50')
     expect(y).toBe('50')
@@ -384,12 +385,12 @@ describe('useDraggable', () => {
     })
     fireEvent.mouseUp(draggable)
 
-    let { x, y } = getText(screen)
+    const { x, y } = getText(screen)
     expect(x).toBe('100')
     expect(y).toBe('0')
 
     setAxis('y')
-    rerender(<DraggableComponent axis={'y'} />)
+    rerender(<DraggableComponent axis="y" />)
 
     fireEvent.mouseDown(draggable, { clientX: 0, clientY: 0 })
     fireEvent.mouseMove(draggable, {

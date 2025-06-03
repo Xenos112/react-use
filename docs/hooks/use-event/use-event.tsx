@@ -1,5 +1,6 @@
+import type { CSSProperties } from 'react'
+import { useRef, useState } from 'react'
 import { useEvent } from 'react-use'
-import { useRef, useState, type CSSProperties } from 'react'
 
 export default function UseEvent() {
   const [count, setCount] = useState(0)
@@ -32,7 +33,9 @@ export default function UseEvent() {
   return (
     <div style={divStyle}>
       <button style={buttonStyle} ref={buttonRef}>
-        Count: {count}
+        Count:
+        {' '}
+        {count}
       </button>
     </div>
   )

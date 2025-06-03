@@ -12,7 +12,9 @@ export default function UseOnline() {
       }}
     >
       <span style={{ display: 'block', color: isOnline ? 'green' : 'online' }}>
-        isOnline: {isOnline ? 'true' : 'false'}
+        isOnline:
+        {' '}
+        {isOnline ? 'true' : 'false'}
       </span>
     </div>
   )

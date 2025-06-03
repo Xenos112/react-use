@@ -11,9 +11,14 @@ export default function UseIdle() {
       }}
     >
       <span style={{ display: 'block', color: isIdle ? 'red' : 'green' }}>
-        isIdle: {isIdle ? 'true' : 'false'}
+        isIdle:
+        {' '}
+        {isIdle ? 'true' : 'false'}
       </span>
-      <span>lastActive: {lastActive}</span>
+      <span>
+        lastActive:
+        {lastActive}
+      </span>
     </div>
   )
 }

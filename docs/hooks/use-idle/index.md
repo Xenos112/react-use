@@ -24,8 +24,14 @@ export default function UseIdle() {
   const { isIdle, lastActive } = useIdle()
   return (
     <div>
-      <span>isIdle: {isIdle ? 'true' : 'false'}</span>
-      <span>lastActive: {lastActive}</span>
+      <span>
+        isIdle:
+        {isIdle ? 'true' : 'false'}
+      </span>
+      <span>
+        lastActive:
+        {lastActive}
+      </span>
     </div>
   )
 }

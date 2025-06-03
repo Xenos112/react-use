@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
-import useOnline from '.'
 import { describe, expect, it } from 'vitest'
+import useOnline from '.'
 
 describe('useOnline', () => {
   it('should return true if the user is online', () => {

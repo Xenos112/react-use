@@ -29,7 +29,10 @@ export default function UseElementVisibility() {
 
   return (
     <div ref={ref}>
-      <span>Element is {isVisible ? 'visible' : 'not visible'}</span>
+      <span>
+        Element is
+        {isVisible ? 'visible' : 'not visible'}
+      </span>
     </div>
   )
 }

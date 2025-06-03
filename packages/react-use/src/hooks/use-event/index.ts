@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
 import type {
   EventHandler,
+  EventT,
   EventTypes,
   TargetElement,
   UseEventProps,
-  EventT,
 } from './types'
+import { useEffect, useRef } from 'react'
 import { isRef } from '../../utils/isRef'
 
 /**
@@ -21,12 +21,12 @@ import { isRef } from '../../utils/isRef'
  *
  * useEvent('click', handleClick)
  */
-const useEvent = <T extends EventTypes>(
+function useEvent<T extends EventTypes>(
   type: T,
   handler: EventHandler<T>,
   target: TargetElement = window,
   options?: UseEventProps,
-): void => {
+): void {
   const savedHandler = useRef(handler)
 
   useEffect(() => {
@@ -36,7 +36,8 @@ const useEvent = <T extends EventTypes>(
   useEffect(() => {
     const targetElement = isRef(target) ? target.current : target
 
-    if (!targetElement) return
+    if (!targetElement)
+      return
     const eventListener = (event: EventT<T>) => savedHandler.current(event)
     targetElement.addEventListener(
       type,

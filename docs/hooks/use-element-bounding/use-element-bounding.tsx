@@ -13,21 +13,37 @@ export default function UseElementBounding() {
       }}
       ref={ref}
     >
-      width: {bounding.width}
+      width:
+      {' '}
+      {bounding.width}
       <br />
-      height: {bounding.height}
+      height:
+      {' '}
+      {bounding.height}
       <br />
-      top: {bounding.top}
+      top:
+      {' '}
+      {bounding.top}
       <br />
-      left: {bounding.left}
+      left:
+      {' '}
+      {bounding.left}
       <br />
-      bottom: {bounding.bottom}
+      bottom:
+      {' '}
+      {bounding.bottom}
       <br />
-      right: {bounding.right}
+      right:
+      {' '}
+      {bounding.right}
       <br />
-      x: {bounding.x}
+      x:
+      {' '}
+      {bounding.x}
       <br />
-      y: {bounding.y}
+      y:
+      {' '}
+      {bounding.y}
     </div>
   )
 }

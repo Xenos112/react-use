@@ -1,15 +1,18 @@
-import { type RefObject } from 'react'
+import type { RefObject } from 'react'
 
-export type Postion = { x: number; y: number }
+export interface Postion {
+  x: number
+  y: number
+}
 export type Axis = 'x' | 'y' | 'both'
 
-export type ReturnType<T> = {
+export interface ReturnType<T> {
   ref: RefObject<T | null>
   position: Postion
   isDragging: boolean
 }
 
-export type UseDraggableProps = {
+export interface UseDraggableProps {
   x?: number
   y?: number
   onStart?: (position: Postion) => void

@@ -27,7 +27,8 @@ export default function UseElementVisibility() {
           zIndex: 100,
         }}
       >
-        Element is{' '}
+        Element is
+        {' '}
         <span style={{ color: isVisible ? 'green' : 'red' }}>
           {isVisible ? 'visible' : 'not visible'}
         </span>

@@ -31,8 +31,8 @@ export default function UseEvent() {
 you can pass a ref to the element you want to listen to the event on.
 
 ```tsx
-import { useEvent } from 'react-use'
 import { useRef, useState } from 'react'
+import { useEvent } from 'react-use'
 
 export default function UseEvent() {
   const [count, setCount] = useState(0)
@@ -45,7 +45,12 @@ export default function UseEvent() {
     },
     buttonRef,
   )
-  return <button ref={buttonRef}>Count: {count}</button>
+  return (
+    <button ref={buttonRef}>
+      Count:
+      {count}
+    </button>
+  )
 }
 ```
 
@@ -62,7 +67,6 @@ const useEvent = <T extends keyof DocumentEventMap>(
   target: TargetElement, // default is window
   options?: UseEventProps,
 ): void
-
 
 type EventHandler<T extends keyof DocumentEventMap> = (
   event: DocumentEventMap[T],

@@ -10,7 +10,11 @@ export default function UseWindowSize() {
         padding: '10px',
       }}
     >
-      window size: {width}x{height}
+      window size:
+      {' '}
+      {width}
+      x
+      {height}
     </div>
   )
 }

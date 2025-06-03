@@ -1,4 +1,4 @@
-export type UseImageReturnType = {
+export interface UseImageReturnType {
   error: string | null
   isLoading: boolean
 }

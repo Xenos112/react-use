@@ -1,4 +1,5 @@
-import { type RefObject, useState, useLayoutEffect } from 'react'
+import type { RefObject } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import useEvent from '../use-event'
 
 /**
@@ -8,9 +9,9 @@ import useEvent from '../use-event'
  * @returns The bounding object.
  * @description A hook work with element boundings in more of a reactive way.
  */
-const useElementBounding = <T extends HTMLElement>(
+function useElementBounding<T extends HTMLElement>(
   ref: RefObject<T | null>,
-): Omit<DOMRect, 'toJSON'> => {
+): Omit<DOMRect, 'toJSON'> {
   const [bounding, setBounding] = useState<Omit<DOMRect, 'toJSON'>>({
     width: 0,
     height: 0,
@@ -23,9 +24,10 @@ const useElementBounding = <T extends HTMLElement>(
   })
 
   const update = () => {
-    if (!ref.current) return
-    const { width, height, top, left, bottom, right, x, y } =
-      ref.current!.getBoundingClientRect()
+    if (!ref.current)
+      return
+    const { width, height, top, left, bottom, right, x, y }
+      = ref.current!.getBoundingClientRect()
     setBounding({
       width,
       height,
@@ -38,7 +40,8 @@ const useElementBounding = <T extends HTMLElement>(
     })
   }
   useLayoutEffect(() => {
-    if (!ref.current) return
+    if (!ref.current)
+      return
     update()
 
     const observer = new ResizeObserver(update)

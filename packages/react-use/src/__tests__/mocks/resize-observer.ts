@@ -1,5 +1,5 @@
 function start() {
-  let global = globalThis as any
+  const global = globalThis as any
 
   global.ResizeObserver = class ResizeObserver {
     observe() {}

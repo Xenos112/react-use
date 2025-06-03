@@ -1,6 +1,6 @@
+import type { UseIdleReturnType } from './types'
 import { useEffect, useState } from 'react'
 import useEvent from '../use-event'
-import type { UseIdleReturnType } from './types'
 
 /**
  * useIdle
@@ -9,14 +9,14 @@ import type { UseIdleReturnType } from './types'
  * @description A hook To detect when the user is idle.
  * @example const { isIdle, lastActive } = useIdle()
  */
-const useIdle = (): UseIdleReturnType => {
-  let events: string[] = []
+function useIdle(): UseIdleReturnType {
+  const events: string[] = []
   const [isIdle, setIsIdle] = useState(false)
   const [lastActive, setLastActive] = useState(0)
 
   // get all events
   for (const property in document) {
-    var match = property.match(/^on(.*)/)
+    const match = property.match(/^on(.*)/)
     if (match) {
       events.push(match[1])
     }
@@ -25,7 +25,7 @@ const useIdle = (): UseIdleReturnType => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsIdle(true)
-      setLastActive((prev) => prev + 1)
+      setLastActive(prev => prev + 1)
     }, 1000)
 
     return () => clearInterval(interval)

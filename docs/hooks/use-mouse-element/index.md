@@ -28,9 +28,13 @@ export default function UseMouseElement() {
   return (
     <div>
       <div ref={ref}>
-        x: {position.x}
+        x:
+        {' '}
+        {position.x}
         <br />
-        y: {position.y}
+        y:
+        {' '}
+        {position.y}
       </div>
     </div>
   )

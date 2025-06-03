@@ -19,20 +19,25 @@ export default function UseImage() {
         padding: '10px',
       }}
     >
-      {isLoading ? (
-        <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
-      ) : (
-        <img
-          style={{
-            maxWidth: '200px',
-            maxHeight: '200px',
-            borderRadius: '7px',
-          }}
-          src={urls[number]}
-        />
-      )}
+      {isLoading
+        ? (
+            <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
+          )
+        : (
+            <img
+              style={{
+                maxWidth: '200px',
+                maxHeight: '200px',
+                borderRadius: '7px',
+              }}
+              src={urls[number]}
+            />
+          )}
       {error && (
-        <p style={{ color: 'var(--vp-c-danger-soft)' }}>Error: {error}</p>
+        <p style={{ color: 'var(--vp-c-danger-soft)' }}>
+          Error:
+          {error}
+        </p>
       )}
       <div>
         <button

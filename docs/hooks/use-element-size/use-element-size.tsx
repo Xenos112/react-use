@@ -13,7 +13,10 @@ export default function UseElementSize() {
       }}
       ref={ref}
     >
-      {size.width} x {size.height}
+      {size.width}
+      {' '}
+      x
+      {size.height}
     </div>
   )
 }

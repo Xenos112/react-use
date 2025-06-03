@@ -13,7 +13,7 @@ export default function UseObjectUrl() {
         padding: '10px',
       }}
     >
-      <input type="file" onChange={(e) => setFile(e.target.files?.[0])} />
+      <input type="file" onChange={e => setFile(e.target.files?.[0])} />
       {url && (
         <div>
           url:

@@ -1,6 +1,6 @@
 export type LocalStorageValue<T> = T | undefined
 
-export type UseLocalStorageOpts<T> = {
+export interface UseLocalStorageOpts<T> {
   initialValue?: T
   onChange?: (value: LocalStorageValue<T>) => void
 }

@@ -17,7 +17,9 @@ export default function Draggable() {
     <div style={styles} ref={ref}>
       Drag me 🥳
       <br />
-      {position.x}x{position.y}
+      {position.x}
+      x
+      {position.y}
     </div>
   )
 }

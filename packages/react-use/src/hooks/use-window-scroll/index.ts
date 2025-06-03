@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import type { WindowScroll } from './types'
+import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
@@ -7,7 +7,7 @@ import useEvent from '../use-event'
  * @returns A `WindowScroll` object that contains the current scroll position and methods to scroll the window.
  * @description a hook To manage window scroll.
  */
-const useWindowScroll = (): WindowScroll => {
+function useWindowScroll(): WindowScroll {
   const [position, setPosition] = useState({
     x: window.scrollX,
     y: window.scrollY,
@@ -28,8 +28,8 @@ const useWindowScroll = (): WindowScroll => {
   })
 
   return {
-    scrollX: (x) => scroll(x, 0),
-    scrollY: (y) => scroll(0, y),
+    scrollX: x => scroll(x, 0),
+    scrollY: y => scroll(0, y),
     scroll,
     ...position,
   }

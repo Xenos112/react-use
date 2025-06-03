@@ -49,7 +49,7 @@ const useLocalStorage: <T>(
 
 type LocalStorageValue<T> = T | undefined
 
-type UseLocalStorageOpts<T> = {
+interface UseLocalStorageOpts<T> {
   initialValue?: T
 }
 

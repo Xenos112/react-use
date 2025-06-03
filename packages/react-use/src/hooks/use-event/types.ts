@@ -1,12 +1,12 @@
-import { type RefObject } from 'react'
+import type { RefObject } from 'react'
 
 export type EventTypes =
   | keyof (
-      | DocumentEventMap
-      | WindowEventMap
-      | HTMLElementEventMap
-      | GlobalEventHandlersEventMap
-    )
+    | DocumentEventMap
+    | WindowEventMap
+    | HTMLElementEventMap
+    | GlobalEventHandlersEventMap
+  )
   | 'online'
   | 'offline'
 

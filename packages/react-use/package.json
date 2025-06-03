@@ -2,6 +2,13 @@
   "name": "react-use",
   "version": "0.0.0",
   "description": "React hooks",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -10,13 +17,6 @@
     "dev": "tsup src/index.ts --watch --format esm,cjs --dts",
     "test": "vitest",
     "test:ui": "vitest --ui"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
   },
   "dependencies": {
     "react": "^19.1.0"

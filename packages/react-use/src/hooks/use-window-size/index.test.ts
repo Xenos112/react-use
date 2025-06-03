@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest'
-import useWindowSize from '.'
 import { act, renderHook } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import useWindowSize from '.'
 
 describe('useWindowSize', () => {
   it('should return the initial window size', () => {

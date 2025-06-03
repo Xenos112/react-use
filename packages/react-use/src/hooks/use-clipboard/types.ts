@@ -1,11 +1,11 @@
-export type ReturnType = {
+export interface ReturnType {
   copy: (text: string) => void
   isSupported: boolean
   text: string
   copied: boolean
 }
 
-export type Options = {
+export interface Options {
   timeout?: number
   onCopy?: (text: string) => void
 }

@@ -2,7 +2,7 @@ import { useAsyncState } from 'react-use'
 
 export default function UseAsyncState() {
   const { data, error, isLoading } = useAsyncState(() =>
-    fetch('https://jsonplaceholder.typicode.com/todos/1').then((res) =>
+    fetch('https://jsonplaceholder.typicode.com/todos/1').then(res =>
       res.json(),
     ),
   )
@@ -16,7 +16,12 @@ export default function UseAsyncState() {
       }}
     >
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
+      {error && (
+        <p>
+          Error:
+          {error.message}
+        </p>
+      )}
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )

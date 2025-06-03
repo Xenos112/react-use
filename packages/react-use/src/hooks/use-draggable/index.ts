@@ -1,5 +1,5 @@
+import type { Postion, ReturnType, UseDraggableProps } from './types'
 import { useLayoutEffect, useRef, useState } from 'react'
-import type { UseDraggableProps, ReturnType, Postion } from './types'
 
 // TODO: add a localStorage key to save the position in the session
 /**
@@ -9,7 +9,7 @@ import type { UseDraggableProps, ReturnType, Postion } from './types'
  * @description A hook that makes an element draggable
  * @example const { ref, position,isDragging } = useDraggable<HTMLDivElement>({ y: 100 })
  */
-const useDraggable = <T extends HTMLElement>({
+function useDraggable<T extends HTMLElement>({
   x = 0,
   y = 0,
   disabled = false,
@@ -18,18 +18,18 @@ const useDraggable = <T extends HTMLElement>({
   onStart = (position: Postion = { x: 0, y: 0 }) => {},
   onMove = (position: Postion = { x: 0, y: 0 }) => {},
   onEnd = (position: Postion = { x: 0, y: 0 }) => {},
-}: UseDraggableProps = {}): ReturnType<T> => {
+}: UseDraggableProps = {}): ReturnType<T> {
   const ref = useRef<T>(null)
   let startX: number | null = 0
   let startY: number | null = 0
   const [position, setPosition] = useState<Postion>({ x, y })
   const [isDragging, setIsDragging] = useState(false)
-  const [lastPosition, setLastPosition] = useState<Postion>({ x: x, y: y })
+  const [lastPosition, setLastPosition] = useState<Postion>({ x, y })
 
   useLayoutEffect(() => {
     if (ref.current) {
-      const currentX = (lastPosition.x ? lastPosition.x : x) + 'px'
-      const currentY = (lastPosition.y ? lastPosition.y : y) + 'px'
+      const currentX = `${lastPosition.x ? lastPosition.x : x}px`
+      const currentY = `${lastPosition.y ? lastPosition.y : y}px`
 
       ref.current.style.position = 'fixed'
       ref.current.style.left = currentX
@@ -41,8 +41,10 @@ const useDraggable = <T extends HTMLElement>({
       ref.current.style.userSelect = 'none'
 
       const handleMouseDown = (event: MouseEvent) => {
-        if (preventDefault) event.preventDefault()
-        if (disabled) return
+        if (preventDefault)
+          event.preventDefault()
+        if (disabled)
+          return
         const offsetX = ref.current!.offsetLeft!
         const offsetY = ref.current!.offsetTop!
 
@@ -56,7 +58,8 @@ const useDraggable = <T extends HTMLElement>({
       }
 
       const handleMouseMove = (event: MouseEvent) => {
-        if (preventDefault) event.preventDefault()
+        if (preventDefault)
+          event.preventDefault()
         if (startX !== null && startY !== null) {
           const newLeft = event.clientX - startX
           const newTop = event.clientY - startY
@@ -66,17 +69,17 @@ const useDraggable = <T extends HTMLElement>({
 
           switch (axis) {
             case 'x':
-              ref.current!.style.left = newLeft + 'px'
-              setPosition((prev) => ({ ...prev, x: newLeft }))
+              ref.current!.style.left = `${newLeft}px`
+              setPosition(prev => ({ ...prev, x: newLeft }))
               break
             case 'y':
-              ref.current!.style.top = newTop + 'px'
-              setPosition((prev) => ({ ...prev, y: newTop }))
+              ref.current!.style.top = `${newTop}px`
+              setPosition(prev => ({ ...prev, y: newTop }))
               break
             case 'both':
             default:
-              ref.current!.style.left = newLeft + 'px'
-              ref.current!.style.top = newTop + 'px'
+              ref.current!.style.left = `${newLeft}px`
+              ref.current!.style.top = `${newTop}px`
               setPosition({ x: newLeft, y: newTop })
               break
           }
@@ -98,8 +101,8 @@ const useDraggable = <T extends HTMLElement>({
       ref.current.addEventListener('mousedown', handleMouseDown)
 
       return () => {
-        ref.current &&
-          ref.current.removeEventListener('mousedown', handleMouseDown)
+        ref.current
+        && ref.current.removeEventListener('mousedown', handleMouseDown)
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
       }

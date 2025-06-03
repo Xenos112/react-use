@@ -1,5 +1,5 @@
+import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
 import useWindowScroll from '.'
 
 beforeEach(() => {
@@ -79,7 +79,7 @@ describe('useWindowScroll', () => {
 
     vi.stubGlobal(
       'scrollBy',
-      ({ top, left }: { top: number; left: number }) => {
+      ({ top, left }: { top: number, left: number }) => {
         mockScrollY += top
         mockScrollX += left
         window.dispatchEvent(new Event('scroll'))

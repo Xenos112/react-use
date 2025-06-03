@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import type { UseImageReturnType } from './types'
+import { useEffect, useState } from 'react'
 
 /**
  * @name useImage
@@ -7,7 +7,7 @@ import type { UseImageReturnType } from './types'
  * @param opts the options object.
  * @returns the image url, the error and a boolean indicating if the image is loading.
  */
-const useImage = (src: string): UseImageReturnType => {
+function useImage(src: string): UseImageReturnType {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<null | string>('')
 

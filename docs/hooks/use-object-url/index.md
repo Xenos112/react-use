@@ -29,7 +29,7 @@ export default function UseObjectUrl() {
 
   return (
     <div>
-      <input type="file" onChange={(e) => setFile(e.target.files?.[0])} />
+      <input type="file" onChange={e => setFile(e.target.files?.[0])} />
       {url && (
         <a href={url} target="_blank">
           {url}
