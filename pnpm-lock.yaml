@@ -55,6 +55,9 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0
     devDependencies:
+      '@testing-library/dom':
+        specifier: ^10.4.0
+        version: 10.4.0
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.6.3
