@@ -2,6 +2,12 @@
   "name": "use-reacty",
   "version": "0.0.1",
   "description": "React hooks",
+  "keywords": [
+    "react",
+    "hooks",
+    "client",
+    "react-hooks"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
