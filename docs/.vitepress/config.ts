@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'React Use',
+  title: 'Use Reacty',
   description: 'A collection of React hooks',
   themeConfig: {
     search: {
