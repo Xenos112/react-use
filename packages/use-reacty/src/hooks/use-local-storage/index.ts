@@ -9,6 +9,7 @@ import { useState } from 'react'
  * useLocalStorage
  * @param key - The key to use for localStorage
  * @param opts - The options for the hook
+ * @param opts.initialValue - The initial value for the storage item
  * @returns [T | undefined, (value: T) => void]
  * @description A hook that allows you to use localStorage in more type-safe way
  * @example const [value, setValue] = useLocalStorage<string>('key', { initialValue: 'value' })

@@ -3,8 +3,7 @@ import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
- * useMouse
- *
+ * @name useMouse
  * @returns The mouse position.
  * @description A hook To work with mouse positions.
  */

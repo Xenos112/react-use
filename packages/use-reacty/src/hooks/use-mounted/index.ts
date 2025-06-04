@@ -9,6 +9,7 @@ function useMounted(): Readonly<boolean> {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setIsMounted(true)
     return () => {
       setIsMounted(false)

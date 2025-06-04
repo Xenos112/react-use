@@ -13,6 +13,7 @@ function useObjectUrl(target?: File | Blob | MediaSource) {
     if (!target)
       return
     const url = URL.createObjectURL(target)
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setObjectUrl(url)
 
     return () => {
