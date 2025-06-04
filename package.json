@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "docs:dev": "vitepress dev docs --port 3000",
+    "dev": "pnpm -r --parallel run \"/^(docs:dev|dev)$/\"",
     "build": "vitepress build docs",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
