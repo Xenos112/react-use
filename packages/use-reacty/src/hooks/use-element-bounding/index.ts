@@ -1,6 +1,5 @@
 import type { RefObject } from 'react'
 import { useCallback, useLayoutEffect, useState } from 'react'
-import useEvent from '../use-event'
 
 /**
  * @name useElementBounding
@@ -47,12 +46,13 @@ function useElementBounding<T extends HTMLElement>(
     const observer = new ResizeObserver(update)
     observer.observe(ref.current)
 
+    window.addEventListener('scroll', update)
+
     return () => {
       observer.disconnect()
+      window.removeEventListener('scroll', update)
     }
   }, [ref, update])
-
-  useEvent('scroll', update)
 
   return bounding
 }
