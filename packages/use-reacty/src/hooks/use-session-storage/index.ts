@@ -10,13 +10,14 @@ import { useState } from 'react'
  * @param key - The key to use for sessionStorage
  * @param opts - The options for the hook
  * @param opts.initialValue - The initial value for the storage item
+ * @param opts.onChange - callback to run when the session storage value is changed
  * @returns [T | undefined, (value: T) => void]
  * @description A hook that allows you to use sessionStorage in more type-safe way
  * @example const [value, setValue] = useSessionStorage<string>('key', { initialValue: 'value' })
  */
 function useSessionStorage<T>(
   key: string,
-  { initialValue = undefined }: UseSessionStorageOpts<T>,
+  { initialValue = undefined, onChange = () => {} }: UseSessionStorageOpts<T>,
 ): ReturnType<T> {
   const [localStorageValue, setLocalStorageValue] = useState<
     SessionStorageValue<T>
@@ -50,6 +51,9 @@ function useSessionStorage<T>(
       setLocalStorageValue(newValue)
       sessionStorage.setItem(key, JSON.stringify(newValue))
     }
+
+    onChange(newValue)
+
     return newValue
   }
 
