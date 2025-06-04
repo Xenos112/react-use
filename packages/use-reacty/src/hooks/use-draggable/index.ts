@@ -56,7 +56,9 @@ function useDraggable<T extends HTMLElement>({
         const offsetX = ref.current!.offsetLeft!
         const offsetY = ref.current!.offsetTop!
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         startX = event.clientX - offsetX
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         startY = event.clientY - offsetY
 
         document.addEventListener('mousemove', handleMouseMove)
