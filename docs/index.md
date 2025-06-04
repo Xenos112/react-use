@@ -1,14 +1,13 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: 'React Use'
+  name: 'Use Reacty'
   text: 'A collection of React hooks'
   tagline: TypeSafe . Stateful . Lightweight
   image:
     src: /logo.png
-    alt: React Use
+    alt: Use Reacty
   actions:
     - theme: brand
       text: Get Started
