@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 
-export interface Postion {
+export interface Position {
   x: number
   y: number
 }
@@ -8,16 +8,16 @@ export type Axis = 'x' | 'y' | 'both'
 
 export interface ReturnType<T> {
   ref: RefObject<T | null>
-  position: Postion
+  position: Position
   isDragging: boolean
 }
 
 export interface UseDraggableProps {
   x?: number
   y?: number
-  onStart?: (position: Postion) => void
-  onMove?: (position: Postion) => void
-  onEnd?: (position: Postion) => void
+  onStart?: (position: Position) => void
+  onMove?: (position: Position) => void
+  onEnd?: (position: Position) => void
   disabled?: boolean
   axis?: Axis
   preventDefault?: boolean

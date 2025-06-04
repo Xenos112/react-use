@@ -1,4 +1,4 @@
-import type { Postion, ReturnType, UseDraggableProps } from './types'
+import type { Position, ReturnType, UseDraggableProps } from './types'
 import { useLayoutEffect, useRef, useState } from 'react'
 
 // TODO: add a localStorage key to save the position in the session
@@ -23,16 +23,16 @@ function useDraggable<T extends HTMLElement>({
   disabled = false,
   axis = 'both',
   preventDefault = false,
-  onStart = (_position: Postion = { x: 0, y: 0 }) => { },
-  onMove = (_position: Postion = { x: 0, y: 0 }) => { },
-  onEnd = (_position: Postion = { x: 0, y: 0 }) => { },
+  onStart = (_position: Position = { x: 0, y: 0 }) => { },
+  onMove = (_position: Position = { x: 0, y: 0 }) => { },
+  onEnd = (_position: Position = { x: 0, y: 0 }) => { },
 }: UseDraggableProps = {}): ReturnType<T> {
   const ref = useRef<T>(null)
   let startX: number | null = 0
   let startY: number | null = 0
-  const [position, setPosition] = useState<Postion>({ x, y })
+  const [position, setPosition] = useState<Position>({ x, y })
   const [isDragging, setIsDragging] = useState(false)
-  const [lastPosition, setLastPosition] = useState<Postion>({ x, y })
+  const [lastPosition, setLastPosition] = useState<Position>({ x, y })
 
   useLayoutEffect(() => {
     if (ref.current) {
