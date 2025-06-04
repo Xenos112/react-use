@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { UseIdleReturnType } from './types'
 import { useEffect, useState } from 'react'
 import useEvent from '../use-event'
@@ -9,17 +10,9 @@ import useEvent from '../use-event'
  * @example const { isIdle, lastActive } = useIdle()
  */
 function useIdle(): UseIdleReturnType {
-  const events: string[] = []
+  const events = ['mousemove', 'mousedown', 'mouseup', 'click', 'dbclick', 'keydown', 'keyup', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointermove', 'pointerdown', 'pointerup', 'focus', 'blur', 'resize', 'visibilitychage']
   const [isIdle, setIsIdle] = useState(false)
   const [lastActive, setLastActive] = useState(0)
-
-  // get all events
-  for (const property in document) {
-    const match = property.match(/^on(.*)/)
-    if (match) {
-      events.push(match[1])
-    }
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,8 +23,6 @@ function useIdle(): UseIdleReturnType {
     return () => clearInterval(interval)
   }, [])
 
-  // this might be a bit heavy, but it's the only way to get the events from the document
-  // maybe later we should only listen to just the events we need
   for (const event of events) {
     useEvent(event as any, () => {
       setIsIdle(false)
