@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks-extra/no-direct-set-state-in-use-effect */
 import type { UseAsyncStateOptions, UseAsyncStateReturnType } from './types'
 import { useEffect, useState } from 'react'
 
@@ -6,6 +7,8 @@ import { useEffect, useState } from 'react'
  * @description A hook To Load data asynchronously.
  * @param asyncFn The async function to be executed.
  * @param opts The options object.
+ * @param opts.onError - callback for when error is thrown
+ * @param opts.onSuccess - callback for when promise is resolved
  * @returns The data, the error and a boolean indicating if the data is loading or not.
  */
 function useAsyncState<T>(
