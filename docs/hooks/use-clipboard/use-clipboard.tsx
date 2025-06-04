@@ -15,27 +15,27 @@ export default function UseClipboard() {
     >
       {isSupported
         ? (
-          <div>
-            <button
-              type="button"
-              style={{
-                background: 'var(--vp-c-success-1)',
-                padding: '5px 10px',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                borderRadius: '7px',
-              }}
-              onClick={() => copy(input)}
-            >
-              copy
-            </button>
-            {' '}
-            {copied && <span>copied</span>}
-          </div>
-        )
+            <div>
+              <button
+                type="button"
+                style={{
+                  background: 'var(--vp-c-success-1)',
+                  padding: '5px 10px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  borderRadius: '7px',
+                }}
+                onClick={() => copy(input)}
+              >
+                copy
+              </button>
+              {' '}
+              {copied && <span>copied</span>}
+            </div>
+          )
         : (
-          <span>not supported</span>
-        )}
+            <span>not supported</span>
+          )}
       <input
         type="text"
         value={input}

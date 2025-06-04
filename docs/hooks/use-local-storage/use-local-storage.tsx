@@ -25,7 +25,7 @@ export default function UseLocalStorage() {
 
   return (
     <div style={divStyle}>
-      <button style={buttonStyle} onClick={() => setCount(prev => prev! + 1)}>
+      <button type="button" style={buttonStyle} onClick={() => setCount(prev => prev! + 1)}>
         Count:
         {' '}
         {count}

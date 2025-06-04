@@ -23,7 +23,7 @@ export default function UseSupported() {
 
   return (
     <div>
-        {isSupported ? "Does Support" : "Doesn't Support"}
+      {isSupported ? 'Does Support' : 'Doesn\'t Support'}
     </div>
   )
 }
