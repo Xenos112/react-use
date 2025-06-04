@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useElementVisibility } from 'react-use'
+import { useElementVisibility } from 'use-reacty'
 
 export default function UseElementVisibility() {
   const ref = useRef<HTMLDivElement>(null)

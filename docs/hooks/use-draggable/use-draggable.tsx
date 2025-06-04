@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 export default function Draggable() {
   const { ref, position } = useDraggable<HTMLDivElement>({

@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { useRef, useState } from 'react'
-import { useEvent } from 'react-use'
+import { useEvent } from 'use-reacty'
 
 export default function UseEvent() {
   const [count, setCount] = useState(0)

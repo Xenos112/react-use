@@ -16,7 +16,7 @@ A hook To scroll the window
 `useWindowScroll` retuns an object that contains the current scroll position and methods to scroll the window.
 
 ```tsx
-import { useWindowScroll } from 'react-use'
+import { useWindowScroll } from 'use-reacty'
 
 export default function UseWindowScroll() {
   const { scrollY, scrollX, y, x } = useWindowScroll()

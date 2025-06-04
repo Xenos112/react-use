@@ -18,7 +18,7 @@ the hook will listen to all events on the `document` object and return a boolean
 it will clean up the event listener when the component unmounts.
 
 ```tsx
-import { useIdle } from 'react-use'
+import { useIdle } from 'use-reacty'
 
 export default function UseIdle() {
   const { isIdle, lastActive } = useIdle()

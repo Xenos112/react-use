@@ -19,7 +19,7 @@ you can pass a `src` prop to the hook to load the image.
 
 ```tsx
 import { useState } from 'react'
-import { useImage } from 'react-use'
+import { useImage } from 'use-reacty'
 
 export default function UseImage() {
   const urls: string[] = [

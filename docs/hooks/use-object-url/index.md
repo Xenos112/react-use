@@ -21,7 +21,7 @@ you can pass a `File`, `Blob` or `MediaSource` object.
 
 ```tsx
 import { useState } from 'react'
-import { useObjectUrl } from 'react-use'
+import { useObjectUrl } from 'use-reacty'
 
 export default function UseObjectUrl() {
   const [file, setFile] = useState<File>()
@@ -52,7 +52,7 @@ make sure to use `useMemo` when you create a blob using `new Blob`, as this will
 
 ```tsx
 import { useState } from 'react'
-import { useObjectUrl } from 'react-use'
+import { useObjectUrl } from 'use-reacty'
 
 export default function UseObjectUrl() {
   const blob = useMemo(() => new Blob(['hello'], { type: 'text/plain' }), [])

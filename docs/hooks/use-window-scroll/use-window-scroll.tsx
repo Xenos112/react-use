@@ -1,4 +1,4 @@
-import { useWindowScroll } from 'react-use'
+import { useWindowScroll } from 'use-reacty'
 
 export default function UseWindowScroll() {
   const { scrollY, scrollX, y, x } = useWindowScroll()
@@ -13,6 +13,7 @@ export default function UseWindowScroll() {
     >
       <div style={{ display: 'flex', gap: '10px' }}>
         <button
+          type="button"
           style={{
             color: 'var(--vp-c-text-3)',
             padding: '4px 10px',
@@ -23,6 +24,7 @@ export default function UseWindowScroll() {
           Scroll Down
         </button>
         <button
+          type="button"
           style={{
             color: 'var(--vp-c-text-3)',
             padding: '4px 10px',

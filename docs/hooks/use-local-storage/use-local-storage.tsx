@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { useLocalStorage } from 'react-use'
+import { useLocalStorage } from 'use-reacty'
 
 export default function UseLocalStorage() {
   const [count, setCount] = useLocalStorage('count', {

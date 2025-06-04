@@ -1,4 +1,4 @@
-import { useTitle } from 'react-use'
+import { useTitle } from 'use-reacty'
 
 export default function UseTitle() {
   const [title, setTitle] = useTitle()

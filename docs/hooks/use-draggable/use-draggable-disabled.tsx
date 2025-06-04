@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 export default function Draggable() {
   const [disabled, setDisabled] = useState(true)
@@ -20,7 +20,7 @@ export default function Draggable() {
     <div style={styles} ref={ref}>
       {disabled ? 'You can\'t drag me 😔' : 'Drag me 🥳'}
       <br />
-      <button onClick={() => setDisabled(prev => !prev)}>
+      <button type="button" onClick={() => setDisabled(prev => !prev)}>
         {disabled ? 'Enable' : 'Disable'}
         {' '}
         dragging

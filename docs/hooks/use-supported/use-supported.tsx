@@ -1,4 +1,4 @@
-import { useSupported } from 'react-use'
+import { useSupported } from 'use-reacty'
 
 export default function UseIdle() {
   const isSupported = useSupported(() => navigator && 'getBattery' in navigator)

@@ -23,7 +23,7 @@ the hook is derived from the [`useElementBounding`](/hooks/use-element-bounding/
 
 ```tsx
 import { useRef } from 'react'
-import { useElementSize } from 'react-use'
+import { useElementSize } from 'use-reacty'
 
 export default function UseElementSize() {
   const ref = useRef<HTMLDivElement>(null)

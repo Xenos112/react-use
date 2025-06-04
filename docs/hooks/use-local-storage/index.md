@@ -20,7 +20,7 @@ passing a key will save the value to local storage with that key.
 passing a default value will use that as the initial value.
 
 ```tsx{1,4,5,6}
-import { useLocalStorage } from 'react-use'
+import { useLocalStorage } from 'use-reacty'
 
 export default function UseLocalStorage() {
   const [count, setCount] = useLocalStorage('count', {

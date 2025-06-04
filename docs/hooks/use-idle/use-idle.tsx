@@ -1,4 +1,4 @@
-import { useIdle } from 'react-use'
+import { useIdle } from 'use-reacty'
 
 export default function UseIdle() {
   const { isIdle, lastActive } = useIdle()

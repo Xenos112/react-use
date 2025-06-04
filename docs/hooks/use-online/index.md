@@ -18,7 +18,7 @@ the hook returns a boolean value that indicates if the user is online or not.
 the returned value is reactive to online and offline events, meaning you can update UI without using `useState` or `useEffect`.
 
 ```tsx
-import { useOnline } from 'react-use'
+import { useOnline } from 'use-reacty'
 
 export default function UseIdle() {
   const isOnline = useOnline()

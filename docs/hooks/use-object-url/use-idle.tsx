@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useObjectUrl } from 'react-use'
+import { useObjectUrl } from 'use-reacty'
 
 export default function UseObjectUrl() {
   const [file, setFile] = useState<File>()

@@ -18,7 +18,7 @@ the hook returns the current window size.
 when resizing the window, the hook will update the window size.
 
 ```tsx
-import { useIdle } from 'react-use'
+import { useIdle } from 'use-reacty'
 
 export default function UseIdle() {
   const { isIdle, lastActive } = useIdle()

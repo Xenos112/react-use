@@ -1,4 +1,4 @@
-import { useOnline } from 'react-use'
+import { useOnline } from 'use-reacty'
 
 export default function UseOnline() {
   const isOnline = useOnline()

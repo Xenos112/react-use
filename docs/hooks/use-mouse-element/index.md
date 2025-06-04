@@ -19,7 +19,7 @@ all the values are reactive.
 
 ```tsx
 import { useRef } from 'react'
-import { useMouseElement } from 'react-use'
+import { useMouseElement } from 'use-reacty'
 
 export default function UseMouseElement() {
   const ref = useRef(null)

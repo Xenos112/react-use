@@ -31,7 +31,7 @@ the hook returns an object with the following properties `ref`, `position` and `
 all the properties are reactive
 
 ```tsx{1,4,6,7,8}
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 function Draggable() {
   const { ref, position,isDragging } = useDraggable({ x: 100, y: 100 })
@@ -50,7 +50,7 @@ you can pass a callback function to the `onStart` `onMove` and `onEnd` props to 
 the callback function will receive the current position of the element as an argument.
 
 ```tsx{7,8,9}
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 function Draggable() {
   const { ref, position } = useDraggable({
@@ -75,7 +75,7 @@ you can pass a boolean to the `disabled` prop to disable the dragging
 desabled could be a reactive value, so you can toggle the dragging with a button.
 
 ```tsx{7}
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 function Draggable() {
   const { ref, position } = useDraggable({
@@ -100,7 +100,7 @@ the axis could be `x`, `y` or `both`
 default value is `both`
 
 ```tsx{7}
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 function Draggable() {
   const { ref, position } = useDraggable({

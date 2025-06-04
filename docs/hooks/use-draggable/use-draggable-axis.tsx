@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 export default function Draggable() {
   const [axis, setAxis] = useState<'x' | 'y'>('x')
@@ -18,7 +18,7 @@ export default function Draggable() {
 
   return (
     <div style={styles} ref={ref}>
-      <button onClick={() => setAxis(prev => (prev === 'x' ? 'y' : 'x'))}>
+      <button type="button" onClick={() => setAxis(prev => (prev === 'x' ? 'y' : 'x'))}>
         Click me to change the axis to
         {' '}
         {axis === 'x' ? 'y' : 'x'}

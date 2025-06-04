@@ -16,7 +16,7 @@ A hook To Load data asynchronously.
 the hook will load the data asynchronously and return a boolean indicating if the data is loading or not.
 
 ```tsx
-import { useAsyncState } from 'react-use'
+import { useAsyncState } from 'use-reacty'
 
 export default function UseAsyncState() {
   const { data, error, isLoading } = useAsyncState(() =>

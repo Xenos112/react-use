@@ -1,4 +1,4 @@
-import { useWindowSize } from 'react-use'
+import { useWindowSize } from 'use-reacty'
 
 export default function UseWindowSize() {
   const { width, height } = useWindowSize()

@@ -19,7 +19,7 @@ the hook will return a function to copy a text and a boolean to indicate if the 
 
 ```tsx
 import { useState } from 'react'
-import { useClipboard } from 'react-use'
+import { useClipboard } from 'use-reacty'
 
 export default function UseClipboard() {
   const [input, setInput] = useState('')

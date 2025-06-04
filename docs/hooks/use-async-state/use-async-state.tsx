@@ -1,4 +1,4 @@
-import { useAsyncState } from 'react-use'
+import { useAsyncState } from 'use-reacty'
 
 export default function UseAsyncState() {
   const { data, error, isLoading } = useAsyncState(() =>

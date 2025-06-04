@@ -19,7 +19,7 @@ when the element is resized, the bounding object will be updated.
 
 ```tsx
 import { useRef } from 'react'
-import { useElementBounding } from 'react-use'
+import { useElementBounding } from 'use-reacty'
 
 export default function UseElementBounding() {
   const ref = useRef<HTMLDivElement>(null)

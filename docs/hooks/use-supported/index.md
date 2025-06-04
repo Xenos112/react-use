@@ -16,7 +16,7 @@ A hook To view if the feature is supported in the browser.
 `useSupported` returns a boolean to indicate if the feature does exist in the browser or not
 
 ```tsx
-import { useSupported } from 'react-use'
+import { useSupported } from 'use-reacty'
 
 export default function UseSupported() {
   const isSupported = useSupported(() => navigator && 'getBattery' in navigator)

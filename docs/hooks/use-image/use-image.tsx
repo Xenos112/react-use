@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useImage } from 'react-use'
+import { useImage } from 'use-reacty'
 
 export default function UseImage() {
   const urls: string[] = [
@@ -21,18 +21,18 @@ export default function UseImage() {
     >
       {isLoading
         ? (
-            <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
-          )
+          <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
+        )
         : (
-            <img
-              style={{
-                maxWidth: '200px',
-                maxHeight: '200px',
-                borderRadius: '7px',
-              }}
-              src={urls[number]}
-            />
-          )}
+          <img
+            style={{
+              maxWidth: '200px',
+              maxHeight: '200px',
+              borderRadius: '7px',
+            }}
+            src={urls[number]}
+          />
+        )}
       {error && (
         <p style={{ color: 'var(--vp-c-danger-soft)' }}>
           Error:

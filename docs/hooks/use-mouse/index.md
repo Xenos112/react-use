@@ -16,7 +16,7 @@ A hook To work with mouse positions.
 the hook returns the mouse position.
 
 ```tsx
-import { useMouse } from 'react-use'
+import { useMouse } from 'use-reacty'
 
 export default function UseIdle() {
   const position = useMouse()

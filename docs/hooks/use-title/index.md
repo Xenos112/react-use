@@ -20,7 +20,7 @@ the hook will update the document title when the dispatcher is called
 you can pass initial value as a prop to `useTitle` and the document will be updated as well
 
 ```tsx
-import { useTitle } from 'react-use'
+import { useTitle } from 'use-reacty'
 
 export default function UseTitle() {
   const [title, setTitle] = useTitle()

@@ -18,7 +18,7 @@ by default the hook will listen to the `window` object, but you can pass a ref t
 it will clean up the event listener when the component unmounts.
 
 ```tsx
-import { useEvent } from 'react-use'
+import { useEvent } from 'use-reacty'
 
 export default function UseEvent() {
   useEvent('click', () => console.log('clicked!'))
@@ -32,7 +32,7 @@ you can pass a ref to the element you want to listen to the event on.
 
 ```tsx
 import { useRef, useState } from 'react'
-import { useEvent } from 'react-use'
+import { useEvent } from 'use-reacty'
 
 export default function UseEvent() {
   const [count, setCount] = useState(0)

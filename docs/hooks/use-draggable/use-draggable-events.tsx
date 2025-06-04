@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable ts/no-use-before-define */
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
-import { useDraggable } from 'react-use'
+import { useDraggable } from 'use-reacty'
 
 export default function DraggableEvents() {
   const { ref, position } = useDraggable<HTMLDivElement>({

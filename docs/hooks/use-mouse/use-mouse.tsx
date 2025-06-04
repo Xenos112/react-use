@@ -1,4 +1,4 @@
-import { useMouse } from 'react-use'
+import { useMouse } from 'use-reacty'
 
 export default function UseMouse() {
   const position = useMouse()
