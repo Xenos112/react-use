@@ -3,11 +3,11 @@ import useEvent from '../use-event'
 
 /**
  * @name useOnline
- * @returns {boolean} - boolean to indicate if the user is online
+ * @returns boolean to indicate if the user is online
  * @description A hook that returns true if the user is online
  * @example const isOnline = useOnline()
  */
-function useOnline(): boolean {
+function useOnline(): Readonly<boolean> {
   const [online, setOnline] = useState(navigator.onLine)
 
   useEvent('online', () => setOnline(true))
