@@ -51,9 +51,9 @@ importers:
 
   packages/use-reacty:
     dependencies:
-      react:
+      react-dom:
         specifier: ^19.1.0
-        version: 19.1.0
+        version: 19.1.0(react@19.1.0)
     devDependencies:
       '@testing-library/dom':
         specifier: ^10.4.0
@@ -73,6 +73,9 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.4.2)(postcss@8.5.4)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.8.0)
