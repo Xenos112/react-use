@@ -7,7 +7,7 @@ import useEvent from '../use-event'
  * @returns The mouse position.
  * @description A hook To work with mouse positions.
  */
-function useMouse() {
+function useMouse(): Readonly<Coords> {
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 })
 
   useEvent('pointermove', (e) => {
