@@ -4,6 +4,7 @@ import type {
   UseLocalStorageOpts,
 } from './types'
 import { useState } from 'react'
+import typeToString from '../../utils/typeToString'
 
 /**
  * useLocalStorage
@@ -17,7 +18,7 @@ import { useState } from 'react'
  */
 function useLocalStorage<T>(
   key: string,
-  { initialValue = undefined, onChange = () => {} }: UseLocalStorageOpts<T>,
+  { initialValue = undefined, onChange = () => { } }: UseLocalStorageOpts<T>,
 ): ReturnType<T> {
   const [localStorageValue, setLocalStorageValue] = useState<
     LocalStorageValue<T>
@@ -26,7 +27,8 @@ function useLocalStorage<T>(
     if (storedValue)
       return JSON.parse(storedValue) as T
     if (initialValue !== undefined) {
-      localStorage.setItem(key, JSON.stringify(initialValue))
+      const value = typeToString(initialValue)
+      localStorage.setItem(key, value as string)
       return initialValue
     }
   })
@@ -43,13 +45,15 @@ function useLocalStorage<T>(
           )
         : value
 
+    const valueToString = typeToString(newValue)
+
     if (newValue === undefined) {
       setLocalStorageValue(undefined)
       localStorage.removeItem(key)
     }
     else {
       setLocalStorageValue(newValue)
-      localStorage.setItem(key, JSON.stringify(newValue))
+      localStorage.setItem(key, valueToString as string)
     }
 
     onChange(newValue)

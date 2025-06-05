@@ -48,7 +48,7 @@ describe('useLocalStorage', () => {
       result.current[1]('new value')
     })
 
-    expect(localStorageMock.getItem('setkey')).toBe('"new value"')
+    expect(localStorageMock.getItem('setkey')).toBe('new value')
     expect(result.current[0]).toBe('new value')
   })
 
