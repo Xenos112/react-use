@@ -1,4 +1,4 @@
 export interface UseImageReturnType {
-  error: string | null
+  error: Error | null
   isLoading: boolean
 }
