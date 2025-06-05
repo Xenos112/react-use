@@ -1,5 +1,6 @@
 import type { Options, ReturnType } from './types'
 import { useState } from 'react'
+import useSupported from '../use-supported'
 
 /**
  * @name useClipboard
@@ -8,12 +9,11 @@ import { useState } from 'react'
  */
 function useClipboard({
   timeout = 1000,
-  onCopy = () => {},
+  onCopy = () => { },
 }: Options = {}): ReturnType {
   const [copied, setCopied] = useState(false)
   const [text, setText] = useState('')
-
-  const isSupported = 'clipboard' in navigator
+  const isSupported = useSupported(() => 'clipboard' in navigator)
 
   const copy = (text: string) => {
     setCopied(true)
