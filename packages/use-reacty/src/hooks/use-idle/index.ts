@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import type { UseIdleReturnType } from './types'
-import { useEffect, useState } from 'react'
-import useEvent from '../use-event'
+import { useEffect, useMemo, useState } from 'react'
 
 /**
  * @name useIdle
@@ -10,7 +8,7 @@ import useEvent from '../use-event'
  * @example const { isIdle, lastActive } = useIdle()
  */
 function useIdle(): UseIdleReturnType {
-  const events = ['mousemove', 'mousedown', 'mouseup', 'click', 'dbclick', 'keydown', 'keyup', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointermove', 'pointerdown', 'pointerup', 'focus', 'blur', 'resize', 'visibilitychage']
+  const events = useMemo(() => ['mousemove', 'mousedown', 'mouseup', 'click', 'dbclick', 'keydown', 'keyup', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointermove', 'pointerdown', 'pointerup', 'focus', 'blur', 'resize', 'visibilitychage'], [])
   const [isIdle, setIsIdle] = useState(false)
   const [lastActive, setLastActive] = useState(0)
 
@@ -20,15 +18,23 @@ function useIdle(): UseIdleReturnType {
       setLastActive(prev => prev + 1)
     }, 1000)
 
-    return () => clearInterval(interval)
-  }, [])
-
-  for (const event of events) {
-    useEvent(event as any, () => {
+    function setNotIdle() {
       setIsIdle(false)
       setLastActive(-1)
-    })
-  }
+    }
+
+    for (const event of events) {
+      document.addEventListener(event, setNotIdle)
+    }
+
+    return () => {
+      clearInterval(interval)
+
+      for (const event of events) {
+        document.removeEventListener(event, setNotIdle)
+      }
+    }
+  }, [events])
 
   return {
     isIdle,
