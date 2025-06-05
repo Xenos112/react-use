@@ -4,8 +4,7 @@ import { useState } from 'react'
 import useEvent from '../use-event'
 
 /**
- * useMouseElement
- *
+ * @name useMouseElement
  * @param ref - The ref object to observe.
  * @returns The mouse position.
  * @description A hook To work with mouse positions.
