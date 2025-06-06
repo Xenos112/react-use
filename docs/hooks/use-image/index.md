@@ -27,21 +27,34 @@ export default function UseImage() {
     'https://picsum.photos/200/201',
     'https://picsum.photos/200/202',
     'https://picsum.photos/200/203',
+    'https://invalid.url',
   ]
   const [number, setNumber] = useState(0)
-  const { error, isLoading } = useImage(urls[number])
+  const { error, isLoading, Image } = useImage({
+    src: urls[number],
+    width: 200,
+    height: 200,
+  })
 
   return (
     <div>
-      {isLoading ? <p>Loading...</p> : <img src={urls[number]} />}
+      {isLoading
+        ? (
+          <p>Loading...</p>
+        )
+        : (
+          <Image />
+        )}
       {error && (
         <p>
           Error:
-          {error}
+          {error.message}
         </p>
       )}
       <div>
-        <button onClick={() => setNumber((number + 1) % urls.length)}>
+        <button
+          onClick={() => setNumber((number + 1) % urls.length)}
+        >
           Change image
         </button>
       </div>

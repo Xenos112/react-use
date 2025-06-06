@@ -10,7 +10,12 @@ export default function UseImage() {
     'https://invalid.url',
   ]
   const [number, setNumber] = useState(0)
-  const { error, isLoading } = useImage(urls[number])
+  const { error, isLoading, Image } = useImage({
+    src: urls[number],
+    width: 200,
+    height: 200,
+    style: { borderRadius: '10px' },
+  })
 
   return (
     <div
@@ -22,18 +27,11 @@ export default function UseImage() {
     >
       {isLoading
         ? (
-            <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
-          )
+          <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
+        )
         : (
-            <img
-              style={{
-                maxWidth: '200px',
-                maxHeight: '200px',
-                borderRadius: '7px',
-              }}
-              src={urls[number]}
-            />
-          )}
+          <Image />
+        )}
       {error && (
         <p style={{ color: 'var(--vp-c-danger-soft)' }}>
           Error:
