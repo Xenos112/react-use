@@ -27,11 +27,11 @@ export default function UseImage() {
     >
       {isLoading
         ? (
-          <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
-        )
+            <p style={{ color: 'var(--vp-c-text-2)' }}>Loading...</p>
+          )
         : (
-          <Image />
-        )}
+            <Image />
+          )}
       {error && (
         <p style={{ color: 'var(--vp-c-danger-soft)' }}>
           Error:

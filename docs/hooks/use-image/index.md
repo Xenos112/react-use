@@ -40,11 +40,11 @@ export default function UseImage() {
     <div>
       {isLoading
         ? (
-          <p>Loading...</p>
-        )
+            <p>Loading...</p>
+          )
         : (
-          <Image />
-        )}
+            <Image />
+          )}
       {error && (
         <p>
           Error:
