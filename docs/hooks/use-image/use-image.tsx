@@ -7,6 +7,7 @@ export default function UseImage() {
     'https://picsum.photos/200/201',
     'https://picsum.photos/200/202',
     'https://picsum.photos/200/203',
+    'https://invalid.url',
   ]
   const [number, setNumber] = useState(0)
   const { error, isLoading } = useImage(urls[number])
@@ -36,7 +37,7 @@ export default function UseImage() {
       {error && (
         <p style={{ color: 'var(--vp-c-danger-soft)' }}>
           Error:
-          {error}
+          {error.message}
         </p>
       )}
       <div>
