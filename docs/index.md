@@ -34,6 +34,3 @@ features:
       src: /state.svg
     details: All hooks are stateful
 ---
-
-<style>
-</style>
