@@ -71,12 +71,3 @@ onMounted(() => {
 })
 
 </script>
-
-<style module>
-
-body {
-    height: 120vh;
-    width: 120vw;
-}
-
-</style>
