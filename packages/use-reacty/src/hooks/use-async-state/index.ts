@@ -1,16 +1,6 @@
-/* eslint-disable react-hooks-extra/no-direct-set-state-in-use-effect */
 import type { UseAsyncStateOptions, UseAsyncStateReturnType } from './types'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-/**
- * @name useAsyncState
- * @description A hook To Load data asynchronously.
- * @param asyncFn The async function to be executed.
- * @param opts The options object.
- * @param opts.onError - callback for when error is thrown
- * @param opts.onSuccess - callback for when promise is resolved
- * @returns The data, the error and a boolean indicating if the data is loading or not.
- */
 function useAsyncState<T>(
   asyncFn: () => Promise<T>,
   { onSuccess, onError }: UseAsyncStateOptions<T> = {},
@@ -20,24 +10,31 @@ function useAsyncState<T>(
   const [isLoading, setIsLoading] = useState(false)
   const [isSettled, setIsSettled] = useState(false)
 
-  useEffect(() => {
+  // Use useCallback to memoize the fetch function
+  const fetchData = useCallback(async () => {
     setIsLoading(true)
     setIsSettled(false)
     setError(null)
-    asyncFn()
-      .then((data) => {
-        setData(data)
-        setIsSettled(true)
-        onSuccess?.(data)
-      })
-      .catch((err) => {
-        setError(err)
-        onError?.(err)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+
+    try {
+      const result = await asyncFn()
+      setData(result)
+      setIsSettled(true)
+      onSuccess?.(result)
+    }
+    catch (err) {
+      setError(err instanceof Error ? err : new Error('Unknown error'))
+      onError?.(err as Error)
+    }
+    finally {
+      setIsLoading(false)
+    }
   }, [asyncFn, onSuccess, onError])
+
+  // Run the fetch on mount and when dependencies change
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   return {
     data,
