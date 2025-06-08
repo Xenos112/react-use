@@ -1,5 +1,6 @@
 import type { Position, ReturnType, UseDraggableProps } from './types'
 import { useLayoutEffect, useRef, useState } from 'react'
+import getCoordinates from '../../utils/getCoordinates'
 
 // TODO: add a localStorage key to save the position in the session
 /**
@@ -45,34 +46,41 @@ function useDraggable<T extends HTMLElement>({
       ref.current.style.cursor = 'move'
       ref.current.style.zIndex = '1000'
 
-      // prevent text selection
+      // prevent user actions
       ref.current.style.userSelect = 'none'
+      ref.current.style.touchAction = 'none'
 
-      const handleMouseDown = (event: MouseEvent) => {
+      // Helper to get coordinates from mouse or touch event
+
+      const handleStart = (event: MouseEvent | TouchEvent) => {
         if (preventDefault)
           event.preventDefault()
         if (disabled)
           return
+
+        const { clientX, clientY } = getCoordinates(event)
         const offsetX = ref.current!.offsetLeft!
         const offsetY = ref.current!.offsetTop!
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        startX = event.clientX - offsetX
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        startY = event.clientY - offsetY
+        startX = clientX - offsetX
+        startY = clientY - offsetY
 
-        document.addEventListener('mousemove', handleMouseMove)
-        document.addEventListener('mouseup', handleMouseUp)
+        document.addEventListener('mousemove', handleMove)
+        document.addEventListener('mouseup', handleEnd)
+        document.addEventListener('touchmove', handleMove, { passive: false })
+        document.addEventListener('touchend', handleEnd)
+
         onStart({ x: offsetX, y: offsetY })
         setLastPosition({ x: offsetX, y: offsetY })
       }
 
-      function handleMouseMove(event: MouseEvent) {
+      function handleMove(event: MouseEvent | TouchEvent) {
         if (preventDefault)
           event.preventDefault()
         if (startX !== null && startY !== null) {
-          const newLeft = event.clientX - startX
-          const newTop = event.clientY - startY
+          const { clientX, clientY } = getCoordinates(event)
+          const newLeft = clientX - startX
+          const newTop = clientY - startY
 
           onMove({ x: newLeft, y: newTop })
           setIsDragging(true)
@@ -96,7 +104,7 @@ function useDraggable<T extends HTMLElement>({
         }
       }
 
-      function handleMouseUp() {
+      function handleEnd() {
         startX = null
         startY = null
         const offsetX = ref.current!.offsetLeft!
@@ -104,21 +112,27 @@ function useDraggable<T extends HTMLElement>({
 
         onEnd({ x: offsetX, y: offsetY })
         setIsDragging(false)
-        document.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseup', handleMouseUp)
+        document.removeEventListener('mousemove', handleMove)
+        document.removeEventListener('mouseup', handleEnd)
+        document.removeEventListener('touchmove', handleMove)
+        document.removeEventListener('touchend', handleEnd)
       }
 
-      ref.current.addEventListener('mousedown', handleMouseDown)
+      ref.current.addEventListener('mousedown', handleStart)
+      ref.current.addEventListener('touchstart', handleStart, { passive: false })
 
       return () => {
-        ref.current && ref.current.removeEventListener('mousedown', handleMouseDown)
-        document.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseup', handleMouseUp)
+        if (ref.current) {
+          ref.current.removeEventListener('mousedown', handleStart)
+          ref.current.removeEventListener('touchstart', handleStart)
+        }
+        document.removeEventListener('mousemove', handleMove)
+        document.removeEventListener('mouseup', handleEnd)
+        document.removeEventListener('touchmove', handleMove)
+        document.removeEventListener('touchend', handleEnd)
       }
     }
   }, [x, y, disabled, axis])
-
-  useLayoutEffect(() => { }, [disabled])
 
   return {
     ref,

@@ -25,9 +25,9 @@ function DraggableComponent({
   y = 0,
   disabled = false,
   axis = 'both',
-  onStart = () => {},
-  onMove = () => {},
-  onEnd = () => {},
+  onStart = () => { },
+  onMove = () => { },
+  onEnd = () => { },
 }: UseDraggableProps) {
   const { ref, position, isDragging } = useDraggable<HTMLDivElement>({
     x,
@@ -402,5 +402,90 @@ describe('useDraggable', () => {
     const { x: newX, y: newY } = getText(screen)
     expect(newX).toBe('100')
     expect(newY).toBe('300')
+  })
+})
+
+describe('useDraggable#touch', () => {
+  it('should update position when dragged', async () => {
+    render(<DraggableComponent />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.touchStart(draggable, {
+      touches: [{
+        clientX: 0,
+        clientY: 0,
+      }],
+    })
+    fireEvent.touchMove(draggable, {
+      touches: [{
+        clientX: 50,
+        clientY: 100,
+      }],
+    })
+    fireEvent.mouseUp(draggable)
+
+    const { x, y, isDragging } = getText(screen)
+
+    expect(x).toBe('50')
+    expect(y).toBe('100')
+    expect(isDragging).toBe('false')
+    expect(draggable.style.left).toBe('50px')
+    expect(draggable.style.top).toBe('100px')
+  })
+
+  it('should update the internal state when dragged', async () => {
+    render(<DraggableComponent />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.touchStart(draggable, {
+      touches: [{
+        clientX: 0,
+        clientY: 0,
+      }],
+    })
+    fireEvent.touchMove(draggable, {
+      touches: [{
+        clientX: 100,
+        clientY: 200,
+      }],
+    })
+    fireEvent.touchEnd(draggable)
+
+    const { x, y, isDragging } = getText(screen)
+
+    expect(x).toBeTruthy()
+    expect(y).toBeTruthy()
+    expect(x).toBe('100')
+    expect(y).toBe('200')
+    expect(isDragging).toBe('false')
+
+    expect(draggable.style.left).toMatch(/^100.*/)
+    expect(draggable.style.top).toMatch(/^200.*/)
+  })
+
+  it('should move in the y only', () => {
+    render(<DraggableComponent axis="y" />)
+
+    const draggable = screen.getByTestId('draggable')
+
+    fireEvent.touchStart(draggable, {
+      touches: [{
+        clientX: 0,
+        clientY: 0,
+      }],
+    })
+    fireEvent.touchMove(draggable, {
+      touches: [{
+        clientX: 100,
+        clientY: 200,
+      }],
+    })
+    fireEvent.touchEnd(draggable)
+
+    const { x, y } = getText(screen)
+    expect(x).toBe('0')
+    expect(y).toBe('200')
   })
 })

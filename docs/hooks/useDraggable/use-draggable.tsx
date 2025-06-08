@@ -1,10 +1,9 @@
-import { useDraggable } from 'use-reacty'
+import { useRef } from 'react'
+import { useDraggableNew } from 'use-reacty'
 
 export default function Draggable() {
-  const { ref, position } = useDraggable<HTMLDivElement>({
-    x: 100,
-    y: 100,
-  })
+  const ref = useRef<HTMLDivElement>(null)
+  const { position } = useDraggableNew<HTMLDivElement>(ref)
 
   return (
     <div
