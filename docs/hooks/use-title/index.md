@@ -1,50 +1,141 @@
 ---
 title: useTitle
-description: A hook To work with documents titles
+description: A React hook for managing document title with automatic updates
 ---
 
 # useTitle
 
-A hook To work with documents titles
+A React hook that provides a simple interface for managing the document title with automatic updates when the value changes.
 
 [[toc]]
 
-## Usage
+## Features
 
-### Basic
+- 📝 Document title management
+- 🔄 Automatic updates
+- 🎭 TypeScript support
+- 🎯 useState-like API
 
-the hook will update the document title when the dispatcher is called
-<br />
-`useTitle` expect user to treat it as `useState` since the underline impementation is just `useState` and `useEffect`
-<br />
-you can pass initial value as a prop to `useTitle` and the document will be updated as well
+## Basic Usage
 
 ```tsx
 import { useTitle } from 'use-reacty'
 
-export default function UseTitle() {
-  const [title, setTitle] = useTitle()
+function PageTitle() {
+  const [title, setTitle] = useTitle('Welcome')
 
   return (
     <div>
-      {title}
-      <input value={title} onChange={e => setTitle(e.target.value)} />
+      <h3>
+        Current Title:
+        {title}
+      </h3>
+      <input
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        placeholder="Change page title..."
+      />
     </div>
   )
 }
 ```
 
+## Type Definitions
+
+```typescript
+type UseTitleReturn = [
+  // Current title value
+  string,
+  // Title setter function
+  Dispatch<SetStateAction<string>>
+]
+
+function useTitle(
+  // Optional initial title
+  initialTitle?: string
+): UseTitleReturn
+```
+
+## Advanced Usage
+
+### Dynamic Titles
+
+```tsx
+function DynamicTitle() {
+  const [count, setCount] = useState(0)
+  const [_, setTitle] = useTitle('Notifications')
+
+  useEffect(() => {
+    setTitle(`(${count}) New Messages`)
+  }, [count])
+
+  return (
+    <button onClick={() => setCount(c => c + 1)}>
+      Add Notification
+    </button>
+  )
+}
+```
+
+### With Route Changes
+
+```tsx
+function RouteTitle() {
+  const { pathname } = useLocation()
+  const [_, setTitle] = useTitle()
+
+  useEffect(() => {
+    const formatted = pathname
+      .slice(1)
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+
+    setTitle(formatted || 'Home')
+  }, [pathname])
+
+  return (
+    <div>
+      Current route:
+      {pathname}
+    </div>
+  )
+}
+```
+
+## Best Practices
+
+1. **Initial Value**
+
+   ```tsx
+   function HomePage() {
+     // Provide default title
+     const [title] = useTitle('Welcome | My App')
+     return <h1>{title}</h1>
+   }
+   ```
+
+2. **Dynamic Updates**
+
+   ```tsx
+   function BlogPost({ post }) {
+     const [_, setTitle] = useTitle()
+
+     useEffect(() => {
+       setTitle(`${post.title} | Blog`)
+       // Reset on unmount
+       return () => setTitle('Blog')
+     }, [post.title])
+
+     return <article>{post.content}</article>
+   }
+   ```
+
+## Live Demo
+
 <div>
 <div ref="demo"></div>
 </div>
-
-## Types Definitions
-
-```ts
-const useTitle = (): UseTitleReturn
-
-type UseTitleReturn = [string, Dispatch<SetStateAction<string>>]
-```
 
 <script setup>
 import { createElement } from 'react'
@@ -58,5 +149,4 @@ onMounted(() => {
   const root = createRoot(demo.value)
   root.render(createElement(UseTitle, {}, null))
 })
-
 </script>

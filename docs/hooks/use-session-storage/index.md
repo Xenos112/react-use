@@ -1,67 +1,195 @@
 ---
 title: useSessionStorage
-description: A hook that makes working with session storage easy.
+description: A React hook for managing session storage with type-safe state management
 ---
 
 # useSessionStorage
 
-A hooks that makes working with session storage easy.
+A powerful React hook that provides a type-safe interface for managing session storage with automatic serialization and state synchronization.
 
 [[toc]]
 
-## Usage
+## Features
 
-### Basic
+- 💾 Session storage persistence
+- 🎭 TypeScript support
+- ⚡ State synchronization
+- 🎯 useState-like API
 
-`useSessionStorage` works just like `useState` but it will also save the value to session storage.
-<br />
-passing a key will save the value to session storage with that key.
-<br />
-passing a default value will use that as the initial value.
+## Basic Usage
 
-```tsx{1,4,5,6}
+```tsx
 import { useSessionStorage } from 'use-reacty'
 
-export default function UseSessionStorage() {
+function Counter() {
   const [count, setCount] = useSessionStorage('count', {
-    initialValue: 0,
+    initialValue: 0
   })
 
   return (
-    <button style={buttonStyle} onClick={() => setCount((prev) => prev! + 1)}>
-      Count: {count}
-    </button>
+    <div>
+      <h3>Persisted Counter</h3>
+      <p>
+        Count:
+        {count}
+      </p>
+      <button onClick={() => setCount(prev => (prev ?? 0) + 1)}>
+        Increment
+      </button>
+    </div>
   )
 }
 ```
 
-<div>
-    <div ref="demo"></div>
-</div>
+## Type Definitions
 
-## Type Declarations
-
-```ts
-const useSessionStorage: <T>(
-  key: string,
-  { initialValue }: UseSessionStorageOpts<T>,
-) => ReturnType<T>
+```typescript
+interface UseSessionStorageOpts<T> {
+  // Initial value if none in storage
+  initialValue?: T
+  // Callback when value changes
+  onChange?: (value: T | undefined) => void
+}
 
 type SessionStorageValue<T> = T | undefined
-
-interface UseSessionStorageOpts<T> {
-  initialValue?: T
-}
 
 type ReturnType<T> = [
   SessionStorageValue<T>,
   (
-    value:
-      | SessionStorageValue<T>
-      | ((value: SessionStorageValue<T>) => SessionStorageValue<T>),
-  ) => SessionStorageValue<T>,
+    value: SessionStorageValue<T> |
+      ((prev: SessionStorageValue<T>) => SessionStorageValue<T>)
+  ) => SessionStorageValue<T>
 ]
+
+function useSessionStorage<T>(
+  key: string,
+  options: UseSessionStorageOpts<T>
+): ReturnType<T>
 ```
+
+## Advanced Usage
+
+### With Complex Types
+
+```tsx
+interface UserPreferences {
+  theme: 'light' | 'dark'
+  fontSize: number
+  notifications: boolean
+}
+
+function Settings() {
+  const [preferences, setPreferences] = useSessionStorage<UserPreferences>('user-preferences', {
+    initialValue: {
+      theme: 'light',
+      fontSize: 16,
+      notifications: true
+    },
+    onChange: (newPrefs) => {
+      console.log('Preferences updated:', newPrefs)
+    }
+  })
+
+  return (
+    <div>
+      <h3>User Settings</h3>
+      <select
+        value={preferences?.theme}
+        onChange={e => setPreferences(prev => ({
+          ...prev!,
+          theme: e.target.value as 'light' | 'dark'
+        }))}
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+  )
+}
+```
+
+### With Form State
+
+```tsx
+function PersistentForm() {
+  const [formData, setFormData] = useSessionStorage('form-draft', {
+    initialValue: {
+      title: '',
+      content: ''
+    }
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev!,
+      [name]: value
+    }))
+  }
+
+  return (
+    <form>
+      <input
+        name="title"
+        value={formData?.title}
+        onChange={handleChange}
+      />
+      <textarea
+        name="content"
+        value={formData?.content}
+        onChange={handleChange}
+      />
+    </form>
+  )
+}
+```
+
+## Best Practices
+
+1. **Type Safety**
+
+   ```tsx
+   function TypeSafeStorage() {
+     // Explicitly type the stored value
+     const [data, setData] = useSessionStorage<string[]>('items', {
+       initialValue: []
+     })
+
+     return (
+       <ul>
+         {data?.map(item => (
+           <li key={item}>{item}</li>
+         ))}
+       </ul>
+     )
+   }
+   ```
+
+2. **Handle Undefined Values**
+
+   ```tsx
+   function SafeAccess() {
+     const [value, setValue] = useSessionStorage<number>('count', {
+       initialValue: 0
+     })
+
+     // Always provide fallback for undefined
+     const displayValue = value ?? 0
+
+     return (
+       <div>
+         Count:
+         {displayValue}
+       </div>
+     )
+   }
+   ```
+
+## Live Demo
+
+<div>
+<div ref="demo"></div>
+</div>
 
 <script setup>
 import { createElement } from 'react'

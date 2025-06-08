@@ -1,56 +1,142 @@
 ---
 title: useWindowSize
-description: A hook To use the window size.
+description: A React hook for tracking window dimensions with automatic updates
 ---
 
 # useWindowSize
 
-A hook To use the window size.
+A React hook that provides real-time window dimensions tracking with automatic updates on resize events.
 
 [[toc]]
 
-## Usage
+## Features
 
-### Basic
+- 📏 Window size tracking
+- 🔄 Real-time updates
+- 🎭 TypeScript support
+- 📐 Responsive design
 
-the hook returns the current window size.
-<br />
-when resizing the window, the hook will update the window size.
+## Basic Usage
 
 ```tsx
-import { useIdle } from 'use-reacty'
+import { useWindowSize } from 'use-reacty'
 
-export default function UseIdle() {
-  const { isIdle, lastActive } = useIdle()
+function WindowSizeTracker() {
+  const { width, height } = useWindowSize()
+
   return (
     <div>
-      <span>
-        isIdle:
-        {isIdle ? 'true' : 'false'}
-      </span>
-      <span>
-        lastActive:
-        {lastActive}
-      </span>
+      <h3>Window Dimensions</h3>
+      <p>Width: {width}px</p>
+      <p>Height: {height}px</p>
     </div>
   )
 }
 ```
 
+## Type Definitions
+
+```typescript
+type WindowSize = Readonly<{
+  // Window width in pixels
+  width: number
+  // Window height in pixels
+  height: number
+}>
+
+function useWindowSize(): WindowSize
+```
+
+## Advanced Usage
+
+### Responsive Layout
+
+```tsx
+function ResponsiveComponent() {
+  const { width } = useWindowSize()
+
+  const isMobile = width < 768
+  const isTablet = width >= 768 && width < 1024
+  const isDesktop = width >= 1024
+
+  return (
+    <div className={`layout ${isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop'}`}>
+      {isMobile && <MobileNav />}
+      {isTablet && <TabletNav />}
+      {isDesktop && <DesktopNav />}
+    </div>
+  )
+}
+```
+
+### Dynamic Styling
+
+```tsx
+function DynamicGrid() {
+  const { width } = useWindowSize()
+
+  const columns = Math.floor(width / 200) // 200px per item
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+      gap: '1rem'
+    }}>
+      {items.map(item => (
+        <GridItem key={item.id} data={item} />
+      ))}
+    </div>
+  )
+}
+```
+
+## Best Practices
+
+1. **Performance Optimization**
+
+   ```tsx
+   function OptimizedLayout() {
+     const { width } = useWindowSize()
+
+     // Round to nearest breakpoint to prevent unnecessary rerenders
+     const breakpoint = useMemo(() => {
+       if (width < 640) return 'sm'
+       if (width < 1024) return 'md'
+       return 'lg'
+     }, [Math.floor(width / 100)])
+
+     return <div className={`container-${breakpoint}`}>Content</div>
+   }
+   ```
+
+2. **Aspect Ratio**
+
+   ```tsx
+   function AspectRatioContainer() {
+     const { width, height } = useWindowSize()
+     const aspectRatio = width / height
+
+     return (
+       <div>
+         <p>Current Aspect Ratio: {aspectRatio.toFixed(2)}</p>
+         <div style={{
+           width: '100%',
+           paddingBottom: `${(1 / aspectRatio) * 100}%`,
+           position: 'relative'
+         }}>
+           Content
+         </div>
+       </div>
+     )
+   }
+   ```
+
+## Live Demo
+
 <div>
 <div ref="demo"></div>
 </div>
-
-## Types Definitions
-
-```ts
-const useWindowSize = (): WindowSize
-
-type WindowSize = Readonly<{
-height: number,
-width: number
-}>
-```
 
 <script setup>
 import { createElement } from 'react'
@@ -64,5 +150,4 @@ onMounted(() => {
   const root = createRoot(demo.value)
   root.render(createElement(UseWindowSize, {}, null))
 })
-
 </script>

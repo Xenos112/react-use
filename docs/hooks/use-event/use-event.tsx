@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { useRef, useState } from 'react'
 import { useEvent } from 'use-reacty'
 
@@ -6,37 +5,52 @@ export default function UseEvent() {
   const [count, setCount] = useState(0)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const divStyle: CSSProperties = {
-    background: 'var(--vp-c-bg-soft)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '50px',
-    borderRadius: '10px',
-  }
+  useEvent('click', () => {
+    setCount(prev => prev + 1)
+  }, buttonRef)
 
-  const buttonStyle: CSSProperties = {
-    color: 'var(--vp-c-text-1)',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '10px',
-    cursor: 'pointer',
-  }
-
-  useEvent(
-    'click',
-    () => {
-      setCount(count + 1)
-    },
-    buttonRef,
-  )
   return (
-    <div style={divStyle}>
-      <button style={buttonStyle} ref={buttonRef}>
-        Count:
+    <div style={{
+      background: 'var(--vp-c-bg-soft)',
+      borderRadius: '8px',
+      padding: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px',
+    }}
+    >
+      <button
+        ref={buttonRef}
+        style={{
+          background: 'var(--vp-c-bg)',
+          color: 'var(--vp-c-text-1)',
+          border: '1px solid var(--vp-c-divider)',
+          padding: '8px 16px',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontSize: '0.9em',
+          transition: 'all 0.2s',
+          width: 'fit-content',
+        }}
+      >
+        Clicked
         {' '}
         {count}
+        {' '}
+        {count === 1 ? 'time' : 'times'}
       </button>
+
+      <div style={{
+        fontSize: '0.9em',
+        color: 'var(--vp-c-text-2)',
+        padding: '8px 12px',
+        background: 'var(--vp-c-bg)',
+        borderRadius: '6px',
+        border: '1px solid var(--vp-c-divider)',
+      }}
+      >
+        Event listener added via useEvent hook
+      </div>
     </div>
   )
 }
