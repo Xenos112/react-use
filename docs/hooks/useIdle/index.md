@@ -54,9 +54,11 @@ interface UseIdleReturnType {
 interface UseIdleOptions {
   // callback when the user becomes idle
   onIdle?: (time:number) => void
+  // time to update the lastActive, default is 1, unit in seconds
+  threshold?: number
 }
 
-function useIdle(): UseIdleReturnType
+function useIdle(opts?:UseIdleOptions): UseIdleReturnType
 ```
 
 ## Monitored Events

@@ -1,8 +1,8 @@
-import { renderHook, waitFor } from '@testing-library/react'
+import { fireEvent, renderHook, waitFor } from '@testing-library/react'
+import { useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { useIdle } from '..'
 
-// tests need improvement
 describe('useIdle', () => {
   it('should return the initial values', () => {
     const { result } = renderHook(() => useIdle())
@@ -34,5 +34,42 @@ describe('useIdle', () => {
 
     expect(onIdle).toHaveBeenCalledTimes(1)
     expect(onIdle).toHaveBeenCalledWith(0)
+  })
+
+  it('should update in each 200ms', async () => {
+    const { result } = renderHook(() => useIdle({ threshold: 0.2 }))
+    await waitFor(() => {
+      expect(result.current).toEqual({
+        isIdle: true,
+        lastActive: 1.2,
+      })
+    }, { timeout: 2200 })
+
+    fireEvent.click(document)
+
+    expect(result.current).toEqual({
+      isIdle: false,
+      lastActive: -1,
+    })
+  })
+  it('should update threshold with useState', async () => {
+    const { result: state } = renderHook(() => useState(0.2))
+    const { result } = renderHook(() => useIdle({ threshold: state.current[0] }))
+    await waitFor(() => {
+      expect(result.current).toEqual({
+        isIdle: true,
+        lastActive: 1.2,
+      })
+    }, { timeout: 2200 })
+
+    state.current[1](1)
+    fireEvent.click(document)
+
+    await waitFor(() => {
+      expect(result.current).not.toEqual({
+        isIdle: false,
+        lastActive: 1.2,
+      })
+    }, { timeout: 2200 })
   })
 })

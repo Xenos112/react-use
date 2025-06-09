@@ -14,5 +14,6 @@ export interface UseIdleReturnType {
 }
 
 export interface UseIdleOptions {
+  threshold?: number
   onIdle?: (time: number) => void
 }

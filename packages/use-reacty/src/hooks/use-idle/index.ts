@@ -5,11 +5,12 @@ import { useEffect, useMemo, useState } from 'react'
  * @name useIdle
  * @param opts options for the hook
  * @param opts.onIdle function that will be called when the user is idle
+ * @param opts.threshold time pass to update the state
  * @returns {isIdle: boolean, lastActive: number} - object that have details about the idle
  * @description A hook To detect when the user is idle.
  * @example const { isIdle, lastActive } = useIdle()
  */
-function useIdle(opts?: UseIdleOptions): UseIdleReturnType {
+function useIdle({ onIdle, threshold = 1 }: UseIdleOptions = {}): UseIdleReturnType {
   const events = useMemo(() => ['mousemove', 'mousedown', 'mouseup', 'click', 'dbclick', 'keydown', 'keyup', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointermove', 'pointerdown', 'pointerup', 'focus', 'blur', 'resize', 'visibilitychage'], [])
   const [isIdle, setIsIdle] = useState(false)
   const [lastActive, setLastActive] = useState(0)
@@ -17,9 +18,9 @@ function useIdle(opts?: UseIdleOptions): UseIdleReturnType {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsIdle(true)
-      setLastActive(prev => prev + 1)
-      opts?.onIdle?.(lastActive)
-    }, 1000)
+      setLastActive(prev => prev + (threshold || 1))
+      onIdle?.(lastActive)
+    }, threshold * 1000 || 1000)
 
     function setNotIdle() {
       setIsIdle(false)
@@ -37,7 +38,7 @@ function useIdle(opts?: UseIdleOptions): UseIdleReturnType {
         document.removeEventListener(event, setNotIdle)
       }
     }
-  }, [events])
+  }, [events, lastActive, onIdle, threshold])
 
   return {
     isIdle,
