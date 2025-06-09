@@ -35,14 +35,30 @@ describe('useMouse', () => {
 
     const { result } = renderHook(() => useMouseElement(refResult.current))
 
-    act(() => {
-      fireEvent(
-        refResult.current.current,
-        new MouseEvent('pointermove', {
+    fireEvent.pointerMove(refResult.current.current, {
+      clientX: 100,
+      clientY: 100,
+    })
+
+    expect(result.current).toEqual({ x: 100, y: 100 })
+  })
+})
+
+describe('useMouse#touch', () => {
+  it('should return the new values of the touch position', async () => {
+    const { result: refResult } = renderHook(() => useRef<HTMLDivElement>(document.createElement('div')))
+    refResult.current.current.style.width = '400px'
+    refResult.current.current.style.height = '400px'
+
+    const { result } = renderHook(() => useMouseElement(refResult.current))
+
+    fireEvent.touchMove(refResult.current.current, {
+      touches: [
+        {
           clientX: 100,
           clientY: 100,
-        }),
-      )
+        },
+      ],
     })
 
     expect(result.current).toEqual({ x: 100, y: 100 })

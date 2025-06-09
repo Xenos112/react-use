@@ -1,6 +1,6 @@
 import type { Coords } from './types'
-import { useState } from 'react'
-import useEvent from '../use-event'
+import { useEffect, useState } from 'react'
+import getCoordinates from '../../utils/getCoordinates'
 
 /**
  * @name useMouse
@@ -10,9 +10,20 @@ import useEvent from '../use-event'
 function useMouse(): Readonly<Coords> {
   const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 })
 
-  useEvent('pointermove', (e) => {
-    setCoords({ x: e.clientX, y: e.clientY })
-  })
+  useEffect(() => {
+    function onMove(e: PointerEvent | TouchEvent) {
+      const { clientX, clientY } = getCoordinates(e)
+      setCoords({ x: clientX, y: clientY })
+    }
+
+    document.addEventListener('pointermove', onMove)
+    document.addEventListener('touchmove', onMove)
+
+    return () => {
+      document.removeEventListener('pointermove', onMove)
+      document.removeEventListener('touchmove', onMove)
+    }
+  }, [])
 
   return coords
 }

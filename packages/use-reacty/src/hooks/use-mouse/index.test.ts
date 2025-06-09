@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import { act, renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import useMouse from '.'
 
@@ -29,16 +29,30 @@ describe('useMouse', () => {
   it('should return the new values of the pointer position', async () => {
     const { result } = renderHook(() => useMouse())
 
-    act(() => {
-      fireEvent(
-        document,
-        new MouseEvent('pointermove', {
+    fireEvent.touchMove(document, {
+      touches: [
+        {
           clientX: 100,
           clientY: 100,
-          bubbles: true,
-          cancelable: true,
-        }),
-      )
+        },
+      ],
+    })
+
+    expect(result.current).toEqual({ x: 100, y: 100 })
+  })
+})
+
+describe('useMouse#touch', () => {
+  it('should return the new values of the touch position', async () => {
+    const { result } = renderHook(() => useMouse())
+
+    fireEvent.touchMove(document, {
+      touches: [
+        {
+          clientX: 100,
+          clientY: 100,
+        },
+      ],
     })
 
     expect(result.current).toEqual({ x: 100, y: 100 })

@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 import type { Coords } from '../use-mouse/types'
-import { useState } from 'react'
-import useEvent from '../use-event'
+import { useEffect, useState } from 'react'
+import getCoordinates from '../../utils/getCoordinates'
 
 /**
  * @name useMouseElement
@@ -12,23 +12,24 @@ import useEvent from '../use-event'
 function useMouseElement<T extends HTMLElement>(
   ref: RefObject<T | null>,
 ): Readonly<Coords> {
-  const [coords, setCoords] = useState<Coords>({
-    x: 0,
-    y: 0,
-  })
+  const [coords, setCoords] = useState<Coords>({ x: 0, y: 0 })
 
-  useEvent(
-    'pointermove',
-    (event) => {
-      if (!ref.current)
-        return
-      setCoords({
-        x: event.offsetX,
-        y: event.offsetY,
-      })
-    },
-    ref,
-  )
+  useEffect(() => {
+    if (ref.current) {
+      function onMove(e: PointerEvent | TouchEvent) {
+        const { clientX, clientY } = getCoordinates(e)
+        setCoords({ x: clientX, y: clientY })
+      }
+
+      ref.current.addEventListener('pointermove', onMove)
+      ref.current.addEventListener('touchmove', onMove)
+
+      return () => {
+        ref.current!.removeEventListener('pointermove', onMove)
+        ref.current!.removeEventListener('touchmove', onMove)
+      }
+    }
+  }, [ref])
 
   return coords
 }
