@@ -55,4 +55,19 @@ describe('useEventListener', () => {
     result.current.current?.click()
     expect(onClick).toHaveBeenCalledTimes(1)
   })
+
+  it('should apply the `once` passed with options', async () => {
+    const onClick = vi.fn()
+    const { result } = renderHook(() => useRef<HTMLButtonElement>(null))
+
+    const button = document.createElement('button')
+    document.body.appendChild(button)
+    result.current.current = button
+
+    renderHook(() => useEvent('click', () => onClick(), result.current, { once: true }))
+    result.current.current?.click()
+    result.current.current?.click()
+    result.current.current?.click()
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
 })
