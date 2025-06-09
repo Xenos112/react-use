@@ -13,7 +13,6 @@ A powerful React hook that detects user inactivity by monitoring various DOM eve
 
 - 👁️ Real-time idle detection
 - 🎯 Multiple event monitoring
-- 🧹 Automatic event cleanup
 - ⏱️ Idle time tracking
 - 🎭 TypeScript-first design
 - 📦 Zero dependencies
@@ -50,6 +49,11 @@ interface UseIdleReturnType {
   isIdle: boolean
   // Seconds since last activity (-1 when active)
   lastActive: number
+}
+
+interface UseIdleOptions {
+  // callback when the user becomes idle
+  onIdle?: (time:number) => void
 }
 
 function useIdle(): UseIdleReturnType
@@ -96,14 +100,16 @@ function ActivityMonitor() {
 
 ```tsx
 function AutoLogout() {
-  const { isIdle, lastActive } = useIdle()
-  const LOGOUT_THRESHOLD = 300 // 5 minutes
-
-  useEffect(() => {
-    if (lastActive >= LOGOUT_THRESHOLD) {
-      logout()
+  const LOGOUT_THRESHOLD = 5
+  const { isIdle, lastActive } = useIdle({
+    onIdle:(time) => {
+      // Logout the user
+      if (time === LOGOUT_THRESHOLD) {
+        logout()
+      }
     }
-  }, [lastActive])
+  })
+
 
   return (
     <div>

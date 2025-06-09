@@ -12,3 +12,7 @@ export interface UseIdleReturnType {
    */
   lastActive: number
 }
+
+export interface UseIdleOptions {
+  onIdle?: (time: number) => void
+}
