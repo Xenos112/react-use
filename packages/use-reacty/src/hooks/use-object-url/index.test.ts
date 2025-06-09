@@ -4,6 +4,8 @@ import useObjectUrl from '.'
 
 describe('useObjectUrl', () => {
   beforeEach(() => {
+    const fakeMediaSource = vi.fn(() => { })
+    vi.stubGlobal('MediaSource', fakeMediaSource)
     vi.stubGlobal('URL', {
       createObjectURL: vi.fn(() => 'mocked-url'),
       revokeObjectURL: vi.fn(),
@@ -23,6 +25,24 @@ describe('useObjectUrl', () => {
     const blob = new Blob(['hello'], { type: 'text/plain' })
     const { result } = renderHook(() => useObjectUrl(blob))
     expect(vi.mocked(window.URL.createObjectURL).mock.calls).toEqual([[blob]])
+    expect(result.current).toBe('mocked-url')
+  })
+
+  it('should create a object url from the MediaSource', () => {
+    const blob = new Blob(['hello'], { type: 'text/plain' })
+    const file = new File([blob], 'main.txt')
+
+    const { result } = renderHook(() => useObjectUrl(file))
+    expect(vi.mocked(window.URL.createObjectURL).mock.calls).toEqual([[file]])
+    expect(result.current).toBe('mocked-url')
+  })
+
+  it('should create an object URL from the MediaSource', () => {
+    const mediaSource = new MediaSource()
+
+    const { result } = renderHook(() => useObjectUrl(mediaSource))
+
+    expect(vi.mocked(window.URL.createObjectURL).mock.calls).toEqual([[mediaSource]])
     expect(result.current).toBe('mocked-url')
   })
 })
