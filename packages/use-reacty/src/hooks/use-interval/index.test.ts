@@ -15,7 +15,6 @@ describe('useInterval', () => {
 
     renderHook(() => useInterval(intervalFn, 1000))
 
-    // Advance time
     act(() => {
       vi.advanceTimersByTime(2000)
     })
