@@ -1,21 +1,9 @@
 import { fireEvent } from '@testing-library/dom'
-import { act, renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react'
 import { useRef } from 'react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import useMouseElement from '.'
-
-class MockPointerEvent extends Event {
-  clientX: number
-  clientY: number
-  pointerType: string
-
-  constructor(type: string, props: PointerEventInit) {
-    super(type, props)
-    this.clientX = props.clientX || 0
-    this.clientY = props.clientY || 0
-    this.pointerType = props.pointerType || 'mouse'
-  }
-}
+import MockPointerEvent from '../../__tests__/mocks/pointer-events'
 
 beforeAll(() => {
   window.PointerEvent = MockPointerEvent as any
