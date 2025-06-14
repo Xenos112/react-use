@@ -6,7 +6,7 @@ export interface UseWebWorkerOptions<T> extends WorkerOptions {
 export type WorkerStatus = 'RUNNING' | 'IDLE' | 'ERROR' | 'SUCCESS' | 'PENDING' | 'TERMINATED'
 
 export interface UseWebWorkerReturn {
-  worker: Worker | null
+  worker: Worker
   postMessage: (message: any, transfer?: Transferable[]) => void
   terminate: () => void
   status: WorkerStatus

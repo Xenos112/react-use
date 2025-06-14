@@ -28,7 +28,7 @@ function useWebWorker<T = any>(
       setStatus('ERROR')
       return null
     }
-  }, [credentials, name, path, type])
+  }, [credentials, name, path, type]) as Worker
 
   useEffect(() => {
     if (!worker)
