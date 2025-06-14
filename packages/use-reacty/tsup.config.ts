@@ -10,7 +10,9 @@ export default defineConfig({
   minifyWhitespace: true,
   minifyIdentifiers: true,
   minifySyntax: true,
-  sourcemap: true,
+  sourcemap: false,
   bundle: true,
-  external: ['react'],
+  external: ['react', 'react-dom'],
+  treeshake: true,
+  noExternal: [],
 })
