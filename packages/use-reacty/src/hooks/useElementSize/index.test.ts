@@ -2,9 +2,9 @@ import { renderHook } from '@testing-library/react'
 import { useRef } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import useElementSize from '.'
-import useElementBounding from '../use-element-bounding'
+import useElementBounding from '../useElementBounding'
 
-vi.mock('../use-element-bounding', () => ({
+vi.mock('../useElementBounding', () => ({
   default: vi.fn(),
 }))
 

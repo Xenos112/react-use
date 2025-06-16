@@ -1,6 +1,6 @@
 import type { WindowSize } from './types'
 import { useState } from 'react'
-import useEvent from '../use-event'
+import useEvent from '../useEvent'
 
 /**
  * @name useWindowSize

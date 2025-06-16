@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 import type { Size } from './types'
-import useElementBounding from '../use-element-bounding'
+import useElementBounding from '../useElementBounding'
 
 /**
  * @name useElementSize

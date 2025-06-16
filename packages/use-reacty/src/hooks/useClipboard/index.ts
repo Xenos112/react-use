@@ -1,6 +1,6 @@
 import type { Options, ReturnType } from './types'
 import { useState } from 'react'
-import useSupported from '../use-supported'
+import useSupported from '../useSupported'
 
 /**
  * @name useClipboard
