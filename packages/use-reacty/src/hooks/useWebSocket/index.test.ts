@@ -153,7 +153,7 @@ describe('useWebSocket', () => {
     )
   })
 
-  it.todo('should call onError callback when error occurs', async () => {
+  it('should call onError callback when error occurs', async () => {
     const onError = vi.fn()
     const { result } = renderHook(() =>
       useWebSocket('ws://localhost:8080', { onError }),
@@ -167,7 +167,7 @@ describe('useWebSocket', () => {
     expect(result.current.status).toBe('closed')
   })
 
-  it.todo('should call onClose callback when connection closes', async () => {
+  it('should call onClose callback when connection closes', async () => {
     const onClose = vi.fn()
     const { result } = renderHook(() =>
       useWebSocket('ws://localhost:8080', { onClose }),
@@ -247,6 +247,52 @@ describe('useWebSocket', () => {
 
     await new Promise(resolve => setTimeout(resolve, 10))
     expect(result.current.status).toBe('closed')
+  })
+
+  it('should not send data when WebSocket is not open', async () => {
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })
+    const { result } = renderHook(() => useWebSocket('ws://localhost:8080'))
+
+    // Try to send data while still connecting
+    act(() => {
+      result.current.send('test message')
+    })
+
+    expect(consoleSpy).toHaveBeenCalledWith('WebSocket is not connected. Unable to send data.')
+    consoleSpy.mockRestore()
+  })
+
+  it('should handle multiple connections with different URLs', async () => {
+    const { result: result1 } = renderHook(() => useWebSocket('ws://localhost:8080/chat'))
+    const { result: result2 } = renderHook(() => useWebSocket('ws://localhost:8080/game'))
+
+    expect((result1.current.ws as any).url).toBe('ws://localhost:8080/chat')
+    expect((result2.current.ws as any).url).toBe('ws://localhost:8080/game')
+  })
+
+  it('should handle callback updates without reconnecting', async () => {
+    let messageCount = 0
+    const initialCallback = vi.fn(() => messageCount++)
+    const updatedCallback = vi.fn(() => messageCount += 10)
+
+    const { result, rerender } = renderHook(
+      ({ onMessage }) => useWebSocket('ws://localhost:8080', { onMessage }),
+      { initialProps: { onMessage: initialCallback } },
+    )
+
+    await new Promise(resolve => setTimeout(resolve, 15))
+
+    // Send message with initial callback
+    ; (result.current.ws as any).simulateMessage('test1')
+    expect(initialCallback).toHaveBeenCalledOnce()
+    expect(messageCount).toBe(1)
+
+    // Update callback and send another message
+    rerender({ onMessage: updatedCallback })
+    ; (result.current.ws as any).simulateMessage('test2')
+
+    expect(updatedCallback).toHaveBeenCalledOnce()
+    expect(messageCount).toBe(11) // 1 + 10
   })
 
   it('should handle chat application scenario with multiple message types', async () => {
