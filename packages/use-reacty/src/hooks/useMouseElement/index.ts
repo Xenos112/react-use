@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import type { Coords } from '../use-mouse/types'
+import type { Coords } from '../useMouse/types'
 import { useEffect, useState } from 'react'
 import getCoordinates from '../../utils/getCoordinates'
 
