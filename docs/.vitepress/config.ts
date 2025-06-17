@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import listHooks from '../../scripts/list-hooks'
+import listHooks from '../../scripts/listHooks'
 
 const hooks = listHooks()
 
