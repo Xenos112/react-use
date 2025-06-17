@@ -32,12 +32,20 @@ async function ensureDirectoryExists(dirPath: string): Promise<void> {
 async function copyFile(src: string, dest: string): Promise<void> {
   try {
     await fs.copyFile(src, dest)
-    console.log(`✓ Copied ${src} → ${dest}`)
   }
   catch (error) {
     console.error(`Failed to copy ${src} to ${dest}:`, error)
     throw error
   }
+}
+
+function clearLine(): void {
+  process.stdout.write('\r\x1B[K')
+}
+
+function updateProgress(message: string): void {
+  clearLine()
+  process.stdout.write(message)
 }
 
 async function getHookDirectories(hooksPath: string): Promise<HookDirectory[]> {
@@ -76,91 +84,69 @@ async function organizeHookDocs(): Promise<void> {
   const sourceHooksPath = './packages/use-reacty/src/hooks'
   const docsOutputPath = './docs/hooks'
 
-  console.log('🚀 Starting hook documentation organization...\n')
+  updateProgress('🚀 Starting hook documentation organization...')
 
-  // Check if source directory exists
   if (!(await fileExists(sourceHooksPath))) {
+    clearLine()
     throw new Error(`Source hooks directory not found: ${sourceHooksPath}`)
   }
 
-  // Get all hook directories
-  console.log(`📂 Scanning ${sourceHooksPath} for hook directories...`)
+  updateProgress('📂 Scanning for hook directories...')
   const hookDirectories = await getHookDirectories(sourceHooksPath)
 
   if (hookDirectories.length === 0) {
+    clearLine()
     console.log('❌ No hook directories found')
     return
   }
 
-  console.log(`📋 Found ${hookDirectories.length} hook directories:\n`)
+  clearLine()
+  console.log(`📋 Found ${hookDirectories.length} hook directories`)
 
-  // Display summary of what was found
-  hookDirectories.forEach((hook) => {
-    const files = []
-    if (hook.hasIndexFile)
-      files.push('index.md')
-    if (hook.hasDemoFile)
-      files.push('demo.tsx')
-
-    console.log(`  • ${hook.name} ${files.length > 0 ? `(${files.join(', ')})` : '(no index/demo files)'}`)
-  })
-
-  console.log('\n📁 Creating documentation structure...\n')
-
-  // Ensure main docs/hooks directory exists
   await ensureDirectoryExists(docsOutputPath)
 
-  // Process each hook directory
+  let processedCount = 0
+  const totalToProcess = hookDirectories.filter(h => h.hasIndexFile || h.hasDemoFile).length
+
   for (const hook of hookDirectories) {
     const hookOutputDir = path.join(docsOutputPath, hook.name)
 
-    // Skip if no files to copy
     if (!hook.hasIndexFile && !hook.hasDemoFile) {
-      console.log(`⚠️  Skipping ${hook.name} - no index.md or demo.tsx found`)
       continue
     }
 
-    // Create hook-specific directory
-    await ensureDirectoryExists(hookOutputDir)
-    console.log(`📁 Created directory: ${hookOutputDir}`)
+    processedCount++
+    updateProgress(`📁 Processing ${hook.name} (${processedCount}/${totalToProcess})...`)
 
-    // Copy index.md if it exists
+    await ensureDirectoryExists(hookOutputDir)
+
     if (hook.hasIndexFile) {
       const srcIndexPath = path.join(hook.path, 'index.md')
       const destIndexPath = path.join(hookOutputDir, 'index.md')
       await copyFile(srcIndexPath, destIndexPath)
     }
 
-    // Copy demo.tsx if it exists
     if (hook.hasDemoFile) {
       const srcDemoPath = path.join(hook.path, 'demo.tsx')
       const destDemoPath = path.join(hookOutputDir, 'demo.tsx')
       await copyFile(srcDemoPath, destDemoPath)
     }
-
-    console.log('') // Empty line for readability
   }
 
-  console.log('✅ Hook documentation organization completed!\n')
-
-  // Summary
-  const processedHooks = hookDirectories.filter(h => h.hasIndexFile || h.hasDemoFile)
-  console.log(`📊 Summary:`)
-  console.log(`   • Total hooks found: ${hookDirectories.length}`)
-  console.log(`   • Hooks processed: ${processedHooks.length}`)
-  console.log(`   • Output directory: ${docsOutputPath}`)
+  clearLine()
+  console.log('✅ Hook documentation organization completed!')
+  console.log(`📊 Processed ${processedCount} hooks → ${docsOutputPath}`)
 }
 
-// Main execution
 async function main(): Promise<void> {
   try {
     await organizeHookDocs()
   }
   catch (error) {
-    console.error('\n❌ Error occurred:', error instanceof Error ? error.message : error)
+    clearLine()
+    console.error('❌ Error occurred:', error instanceof Error ? error.message : error)
     process.exit(1)
   }
 }
 
-// Run the script
 main()
