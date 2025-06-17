@@ -4,10 +4,12 @@ description: How to install use-reacty in you project
 ---
 
 # Get Started
+
 use-reacty is a hooks library for react that makes life easier for the developer,
 it provides set of hooks that are well documented and easy to use and integrate into your project.
 
 ## Installation
+
 To install use-reacty in your project, use can use the following commands to install it:
 
 ::: code-group
@@ -35,8 +37,8 @@ the current version does not support SSR,
 meaning that you have limited access to the hooks on the server side.
 :::
 
-
 ## Usage Example
+
 by importing the library in your project, you will have access to all the hooks
 
 ```tsx

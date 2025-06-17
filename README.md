@@ -1,7 +1,8 @@
 # use-reacty
 
 use-reacty is a React hook library that provides a set of useful hooks for React.
-> [!WARNING]  
+
+> [!WARNING]
 > Project still under development
 
 ## Installation
@@ -19,6 +20,7 @@ yarn install use-reacty # yarn
 ```
 
 ## Usage Example
+
 ```ts
 import {useIdle, useSupported, useTitle} from 'use-reacty'
 

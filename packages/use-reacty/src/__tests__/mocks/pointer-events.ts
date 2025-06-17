@@ -10,4 +10,3 @@ export default class MockPointerEvent extends Event {
     this.pointerType = props.pointerType || 'mouse'
   }
 }
-// eslint-disable-next-line style/no-multiple-empty-lines
