@@ -37,5 +37,5 @@ const isSupported = useSupported(() => navigator && 'getBattery' in navigator)
 - [ ] create more than 50 hooks.
 - [ ] test all hooks.
 - [ ] make it SSR compatible.
-- [ ] provide README file under each hook.
+- [X] provide docs file under each hook.
 - [ ] make it more extendable.
