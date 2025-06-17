@@ -5,4 +5,4 @@ dist
 dist-ssr
 *.local
 playground
-docs/hooks
+/docs/hooks/
