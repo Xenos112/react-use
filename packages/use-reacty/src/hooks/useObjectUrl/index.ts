@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks-extra/no-direct-set-state-in-use-effect */
 import { useEffect, useState } from 'react'
 
 /**
@@ -7,13 +8,15 @@ import { useEffect, useState } from 'react'
  * @returns the object url.
  */
 function useObjectUrl(target?: File | Blob | MediaSource) {
-  const [objectUrl, setObjectUrl] = useState<string>()
+  const [objectUrl, setObjectUrl] = useState<string>('')
 
   useEffect(() => {
-    if (!target)
+    if (!target) {
+      setObjectUrl('')
       return
+    }
+
     const url = URL.createObjectURL(target)
-    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setObjectUrl(url)
 
     return () => {

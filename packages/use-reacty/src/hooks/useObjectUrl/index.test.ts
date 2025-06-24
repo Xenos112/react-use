@@ -18,7 +18,7 @@ describe('useObjectUrl', () => {
 
   it('should return a undefined when first called', () => {
     const { result } = renderHook(() => useObjectUrl())
-    expect(result.current).toBe(undefined)
+    expect(result.current).toBe('')
   })
 
   it('should create a object url from the blob', () => {
