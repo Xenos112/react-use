@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
  */
 function useTitle(initialTitle?: string): UseTitleReturn {
   const [title, setTitle] = useState(() => {
-    return initialTitle ?? document.title
+    return initialTitle || document.title
   })
 
   useEffect(() => {
