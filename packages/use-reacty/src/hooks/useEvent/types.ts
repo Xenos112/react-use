@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 
-export type EventTypes =
-  | keyof (
+export type EventTypes
+  = | keyof (
     | DocumentEventMap
     | WindowEventMap
     | HTMLElementEventMap
