@@ -1,5 +1,5 @@
 import type { UseIdleOptions, UseIdleReturnType } from './types'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * @name useIdle
@@ -11,7 +11,28 @@ import { useEffect, useMemo, useState } from 'react'
  * @example const { isIdle, lastActive } = useIdle()
  */
 function useIdle({ onIdle, threshold = 1 }: UseIdleOptions = {}): UseIdleReturnType {
-  const events = useMemo(() => ['mousemove', 'mousedown', 'mouseup', 'click', 'dbclick', 'keydown', 'keyup', 'keypress', 'scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointermove', 'pointerdown', 'pointerup', 'focus', 'blur', 'resize', 'visibilitychage'], [])
+  const events = [
+    'mousemove',
+    'mousedown',
+    'mouseup',
+    'click',
+    'dbclick',
+    'keydown',
+    'keyup',
+    'keypress',
+    'scroll',
+    'wheel',
+    'touchstart',
+    'touchmove',
+    'touchend',
+    'pointermove',
+    'pointerdown',
+    'pointerup',
+    'focus',
+    'blur',
+    'resize',
+    'visibilitychage',
+  ]
   const [isIdle, setIsIdle] = useState(false)
   const [lastActive, setLastActive] = useState(0)
 
@@ -38,7 +59,8 @@ function useIdle({ onIdle, threshold = 1 }: UseIdleOptions = {}): UseIdleReturnT
         document.removeEventListener(event, setNotIdle)
       }
     }
-  }, [events, lastActive, onIdle, threshold])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastActive, onIdle, threshold])
 
   return {
     isIdle,
