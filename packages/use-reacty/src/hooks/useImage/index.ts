@@ -1,5 +1,5 @@
 import type { UseImageOptions, UseImageReturnType } from './types'
-import { createElement, useEffect, useMemo, useState } from 'react'
+import { createElement, useEffect, useState } from 'react'
 
 /**
  * @name useImage
@@ -8,12 +8,28 @@ import { createElement, useEffect, useMemo, useState } from 'react'
  * @returns isLoading, error and Image component to use
  */
 function useImage(props: UseImageOptions): UseImageReturnType {
-  const { width, height, src, sizes, srcSet: srcset, crossorigin, className, loading, referrerPolicy, decoding, fetchPriority, isMap, useMap, alt } = props
+  const {
+    width,
+    height,
+    src,
+    sizes,
+    srcSet: srcset,
+    crossorigin,
+    className,
+    loading,
+    referrerPolicy,
+    decoding,
+    fetchPriority,
+    isMap,
+    useMap,
+    alt,
+  } = props
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
-  const image = useMemo(() => new Image(width, height), [height, width])
 
   useEffect(() => {
+    const image = new Image(width, height)
+
     if (crossorigin)
       image.crossOrigin = crossorigin
 
@@ -62,7 +78,22 @@ function useImage(props: UseImageOptions): UseImageReturnType {
       setIsLoading(true)
       setError(null)
     }
-  }, [alt, className, crossorigin, decoding, fetchPriority, image, isMap, loading, referrerPolicy, sizes, src, srcset, useMap])
+  }, [
+    alt,
+    className,
+    crossorigin,
+    decoding,
+    fetchPriority,
+    isMap,
+    loading,
+    referrerPolicy,
+    sizes,
+    src,
+    srcset,
+    useMap,
+    width,
+    height,
+  ])
 
   return {
     isLoading,
