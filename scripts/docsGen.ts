@@ -106,7 +106,9 @@ async function organizeHookDocs(): Promise<void> {
   await ensureDirectoryExists(docsOutputPath)
 
   let processedCount = 0
-  const totalToProcess = hookDirectories.filter(h => h.hasIndexFile || h.hasDemoFile).length
+  const totalToProcess = hookDirectories.filter(
+    h => h.hasIndexFile || h.hasDemoFile,
+  ).length
 
   for (const hook of hookDirectories) {
     const hookOutputDir = path.join(docsOutputPath, hook.name)
@@ -116,7 +118,9 @@ async function organizeHookDocs(): Promise<void> {
     }
 
     processedCount++
-    updateProgress(`📁 Processing ${hook.name} (${processedCount}/${totalToProcess})...`)
+    updateProgress(
+      `📁 Processing ${hook.name} (${processedCount}/${totalToProcess})...`,
+    )
 
     await ensureDirectoryExists(hookOutputDir)
 
@@ -144,7 +148,10 @@ async function main(): Promise<void> {
   }
   catch (error) {
     clearLine()
-    console.error('❌ Error occurred:', error instanceof Error ? error.message : error)
+    console.error(
+      '❌ Error occurred:',
+      error instanceof Error ? error.message : error,
+    )
     process.exit(1)
   }
 }
