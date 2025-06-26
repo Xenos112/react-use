@@ -32,19 +32,14 @@ bun add use-reacty
 
 once installed you can use it in your project with no extra setup.
 
-::: danger SSR & SSG
-the current version does not support SSR,
-meaning that you have limited access to the hooks on the server side.
-:::
-
 ## Usage Example
 
 by importing the library in your project, you will have access to all the hooks
 
 ```tsx
-import {useIdle, useSupported, useTitle} from 'use-reacty'
+import { useIdle, useSupported, useTitle } from "use-reacty";
 
-const { isIdle } = useIdle()
-const [title, setTitle] = useTitle()
-const isSupported = useSupported(() => navigator && 'getBattery' in navigator)
+const { isIdle } = useIdle();
+const [title, setTitle] = useTitle();
+const isSupported = useSupported(() => navigator && "getBattery" in navigator);
 ```
